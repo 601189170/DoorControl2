@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="green">#1FC48F</color>
+    <color name="green2">#501FC48F</color>
+    <color name="gray">#D8D8D8</color>
+    <color name="white">#FFFFFF</color>
+    <color name="white2">#FEFEFE</color>
+    <color name="black">#000</color>
+    <color name="black2">#262626</color>
+    <color name="black3">#504F4F</color>
+    <color name="black5">#656565</color>
+    <color name="black6">#50000000</color>
+    <color name="black7">#30000000</color>
+    <color name="blue7">#4F91FF</color>
+    <color name="white3">#FFFFFE</color>
+    <color name="annoBg">#E3EDFF</color>
+    <color name="jured">#FF6600</color>
+    <color name="jured2">#FF5F00</color>
+    <color name="home_huise">#E7E7E7</color>
+    <color name="home_E7">#A7A7A7</color>
+    <color name="line">#E7E7E7</color>
+    <color name="line4">#E5EEF2</color>
+    <color name="line2">#EEEEEE</color>
+
+    <color name="yellow">#FFD24B</color>
+    <color name="blue">#37A4FF</color>
+    <color name="blue2">#51B0FF</color>
+    <color name="blue4">#3782FF</color>
+    <color name="line3">#EEF1FD</color>
+    <color name="line5">#F7FAFF</color>
+    <color name="hint">#BFBFBF</color>
+    <color name="hs">#F8F8F8</color>
+    <color name="news">#6ea4ff</color>
+
+    <color name="white5">#E0EBFF</color>
+    <color name="zise">#5B69FE</color>
+    <color name="lanse">#3782FF</color>
+    <color name="red">#FF0000</color>
+    <color name="c4757E8">#4757E8</color>
+    <color name="lineing">#E7ECF7</color>
+    <color name="hs2">#F7F7FD</color>
+    <color name="item_view_selected_color">#cfcfcf</color>
+
+    <color name="item_view_normal_color">#FFFFFFFF</color>
+    <color name="color_bg_notification">#80000000</color>
+    <color name="color_bg_name">#80000000</color>
+    <color name="dot_selected_color">#ababab</color>
+</resources>
