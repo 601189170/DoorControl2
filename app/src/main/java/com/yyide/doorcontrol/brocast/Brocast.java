@@ -3,6 +3,11 @@ package com.yyide.doorcontrol.brocast;
 import android.content.Context;
 import android.content.Intent;
 
+import com.yyide.doorcontrol.BluetoothService;
+import com.yyide.doorcontrol.activity.doorControlActivity;
+import com.yyide.doorcontrol.activity.doorListActivity;
+import com.yyide.doorcontrol.base.BaseConstant;
+
 /**
  * Created by Hao on 2017/10/26.
  */
@@ -99,4 +104,28 @@ public class Brocast {
         context.sendBroadcast(intent);
     }
 
+    public static void reset(Context context){
+        Intent intent = new Intent();
+        intent.setClass(context, BluetoothService.class);
+        intent.putExtra(BaseConstant.Command, "reset");
+        context.startService(intent);
+    }
+    public static void scan(Context context){
+        Intent intent = new Intent();
+        intent.setClass(context, BluetoothService.class);
+        intent.putExtra(BaseConstant.Command, "scan");
+        context.startService(intent);
+    }
+    public static void open(Context context){
+        Intent intent = new Intent();
+        intent.setClass(context, BluetoothService.class);
+        intent.putExtra(BaseConstant.Command, "open");
+        context.startService(intent);
+    }
+    public static void start(Context context){
+        Intent intent = new Intent();
+        intent.setClass(context, BluetoothService.class);
+        intent.putExtra(BaseConstant.Command, "start");
+        context.startService(intent);
+    }
 }

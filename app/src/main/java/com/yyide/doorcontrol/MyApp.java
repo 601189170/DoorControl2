@@ -30,6 +30,9 @@ import com.yyide.doorcontrol.utils.MyHashMap;
 import java.io.File;
 import java.io.InputStream;
 
+import demo.MyApplication;
+import demo.model.AccountInfo;
+import demo.model.LockObj;
 import okhttp3.OkHttpClient;
 
 import static com.yyide.doorcontrol.utils.Object2Map.object2Map;
@@ -72,7 +75,9 @@ public class MyApp extends Application {
 
 
 
-
+    private static MyApp mInstance;
+    private AccountInfo accountInfo;
+    private LockObj mTestLockObj;
 
 
 
@@ -108,6 +113,22 @@ public class MyApp extends Application {
     }
 
 
+
+    public AccountInfo getAccountInfo() {
+        return accountInfo;
+    }
+
+    public void setAccountInfo(AccountInfo accountInfo) {
+        this.accountInfo = accountInfo;
+    }
+
+    public void saveChoosedLock(LockObj lockObj){
+        this.mTestLockObj = lockObj;
+    }
+
+    public LockObj getChoosedLock(){
+        return this.mTestLockObj;
+    }
 
 
     private void readCard() {
