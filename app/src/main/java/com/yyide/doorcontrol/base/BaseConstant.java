@@ -162,5 +162,7 @@ public class BaseConstant {
     public static final int ERRMSG2= 635;
 
 
+    public static String Command="COMMAND";
+
 
 }
