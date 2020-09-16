@@ -16,11 +16,11 @@ public class LoginReq extends BaseBeanReq<LoginRsp> {
 
     public String loginName;
 
-    public String passWord;
+    public String password;
 
     @Override
     public String myAddr() {
-        return "/api/login";
+        return "/api/reservation-door/doorLoginIn";
     }
 
     @Override

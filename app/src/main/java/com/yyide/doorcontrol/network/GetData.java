@@ -96,6 +96,30 @@ public class GetData {
         return  url;
 
     }
+
+
+    /**
+     * 独立操作130端口请求
+     */
+    public static <T> String requestUrl130(BaseBeanReq<T> bean) {
+        try {
+            MyHashMap map = new MyHashMap();
+            map.putAll(object2Map(bean));
+            String encryStr = AuthcodeTwo.authcodeEncode(map.toString(), URL_KEY);
+          //  String urlRequest = "http://192.168.3.109:8890" + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");
+            // String urlRequest = "http://192.168.3.209:8080" + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");//刘瑞斌本地
+            //String urlRequest = "http://192.168.3.13:8080" + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");
+               String urlRequest = "http://120.76.189.190" + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");//黄文飞本地
+            L.d("JSON本地", urlRequest);
+            L.d("JSON本地", JSON.toJSONString(bean));
+            return urlRequest;
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
+
     public static <T> String requestUrlyd(BaseBeanReq<T> bean) {
 
         try {
@@ -217,7 +241,7 @@ public class GetData {
         }
 
     }
-    public static <T> String request190(BaseBeanReq<T> bean) {
+    public static <T> String request130(BaseBeanReq<T> bean) {
 
         try {
 
@@ -241,31 +265,7 @@ public class GetData {
         }
 
     }
-//    public static <T> String requestUrl3(BaseBeanReq<T> bean) {
-//
-//        try {
-//
-//            MyHashMap map = new MyHashMap();
-//
-//            map.putAll(object2Map(bean));
-//
-//            String encryStr = AuthcodeTwo.authcodeEncode(map.toString(), URL_KEY);
-//
-//            String urlRequest = url3 + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");
-//
-//            L.d("JSON", urlRequest);
-//
-//            L.d("JSON", JSON.toJSONString(bean));
-//
-//            return urlRequest;
-//
-//        } catch (Exception e) {
-//
-//            return null;
-//
-//        }
-//
-//    }
+
 
     public static <T> String requestFaceUrl(BaseBeanReq<T> bean) {
 

@@ -5,6 +5,7 @@ android {
     defaultConfig {
         applicationId "com.yyide.doorcontrol"
         minSdkVersion 19
+        //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -61,4 +62,8 @@ dependencies {
     implementation(name: 'ttlock-release-3.0.7', ext: 'aar')
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+
+
+
+
 }

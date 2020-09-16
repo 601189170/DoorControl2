@@ -93,10 +93,6 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-//        initPresentation();
-
-
     }
 
     @Override
@@ -104,11 +100,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onPause();
         Log.e("TAG", "onPause: " );
     }
-
-
-
-
-
 
     @OnClick(R.id.post)
     public void onViewClicked() {
@@ -124,7 +115,6 @@ public class RegisterActivity extends AppCompatActivity {
         ValidSerialKeyReq req = new ValidSerialKeyReq();
         req.serialKey = et1.getText().toString();
         req.machineCode = DeviceUtils.getAndroidID();
-//        MyApp.getInstance().requestData2(this, req, new listener(), new error());
         MyApp.getInstance().requestData2(this, req, new listener(), new error());
     }
 
@@ -139,8 +129,6 @@ public class RegisterActivity extends AppCompatActivity {
                 SPUtils.getInstance().put(BaseConstant.REGISTERDATA, JSON.toJSONString(rsp));
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                             RegisterActivity.this.finish();
-//                BaiduCode(key);
-//                setAuth();
             } else
                 ToastUtils.showShort(rsp.info);
         }

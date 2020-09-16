@@ -1,15 +1,12 @@
 package com.yyide.doorcontrol;
 
-import android.content.Context;
 import android.content.Intent;
-import android.hardware.display.DisplayManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Display;
-import android.view.WindowManager;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,9 +31,8 @@ import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     SweetAlertDialog pd;
-
     @BindView(R.id.et1)
     EditText et1;
     @BindView(R.id.et2)
@@ -44,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.post)
     TextView post;
 
+    String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,44 +48,41 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         pd = new LoadingTools().pd(this);
-//        titie.setBackgroundResource(R.drawable.fk_titile);
-        if (AppUtils.isAppDebug()){
-            et1.setText("FK0064");
-            et2.setText("123456");
-        }
+//        if (AppUtils.isAppDebug()){
+//            et1.setText("FK0064");
+//            et2.setText("123456");
+//        }
 
+        Intent intent = getIntent();
+        type = intent.getStringExtra("type");//点击按钮的类型
+        post.setOnClickListener(this);
 
     }
 
-    @OnClick(R.id.post)
-    public void onViewClicked() {
-//        startActivity(new Intent(this, Ma inActivity.class));
-        if (TextUtils.isEmpty(et1.getText())) {
-            Toast.makeText(LoginActivity.this, "请输入账号", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(et2.getText())) {
-            Toast.makeText(LoginActivity.this, "请输入密码", Toast.LENGTH_SHORT).show();
-        } else PostData();
-
-//        finish();
-    }
 
     void PostData() {
         pd.show();
         LoginReq req = new LoginReq();
         try {
             req.loginName = URLEncoder.encode(et1.getText().toString().trim(), "UTF-8");
-            req.passWord = URLEncoder.encode(et2.getText().toString(), "UTF-8");
+            req.password = URLEncoder.encode(et2.getText().toString(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
-
         MyApp.getInstance().requestData(this, req, new sListener(), new Error());
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.post:
+                PostData();
+                break;
+        }
     }
 
 
     class sListener implements Response.Listener<LoginRsp> {
-
         @Override
         public void onResponse(LoginRsp rsp) {
             Log.e("TAG", "LoginRsp: " + JSON.toJSON(rsp));
@@ -108,10 +102,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     class Error implements Response.ErrorListener {
-
         @Override
         public void onErrorResponse(VolleyError volleyError) {
-            pd.dismiss();
+           // pd.dismiss();
             new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.NORMAL_TYPE)
                     .setTitleText("网络设置").setContentText("网络异常，请检查网络。").setCancelText("取消").setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override
@@ -127,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
             }).show();
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
