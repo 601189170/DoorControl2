@@ -20,7 +20,7 @@ public class LoginReq extends BaseBeanReq<LoginRsp> {
 
     @Override
     public String myAddr() {
-        return "/api/reservation-door/doorLoginIn";
+        return "/java-door/api/reservation-door/doorLoginIn";
     }
 
     @Override

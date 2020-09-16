@@ -20,7 +20,8 @@ public class BaseConstant {
     public static final int PAGE_SIZE = 20;
 
     /*请求成功消息编码*/
-    public static int REQUEST_SUCCES = 10000;
+    public static int REQUEST_SUCCES = 200;
+    public static int REQUEST_SUCCES2 = 10000;
 
     /*刷卡器接口*/
     public static String SPORT = "/dev/ttyS1";

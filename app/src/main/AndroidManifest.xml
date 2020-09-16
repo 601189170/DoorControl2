@@ -77,31 +77,40 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="landscape">
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
 
-        <activity android:name=".activity.SettingActivity"
-            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".activity.SettingActivity"
+            android:screenOrientation="landscape" />
 
-        <activity android:name=".SelectDoorControlSystemActivity"
-            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".SelectDoorControlSystemActivity"
+            android:screenOrientation="landscape">
 
-
-
-
-
-
-
-
-
-
-        <activity android:name=".activity.doorControlActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <!--预约门禁登录界面-->
+        <activity
+            android:name=".activity.AppointmentLoginActivity"
+            android:screenOrientation="landscape" />
+        <!--预约门禁主界面-->
+        <activity
+            android:name=".activity.AppointmentMainActivity"
+            android:screenOrientation="landscape" />
+
+
+        <activity android:name=".activity.doorControlActivity">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".activity.doorListActivity"

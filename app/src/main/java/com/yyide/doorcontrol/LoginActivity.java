@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                L.j(JSON.toJSONString(rsp.data.cardRight));
                 LoginActivity.this.finish();
             } else
-                Toast.makeText(LoginActivity.this, rsp.info, Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, rsp.msg, Toast.LENGTH_SHORT).show();
 //                tips.setText(rsp.info);
         }
     }

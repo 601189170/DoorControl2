@@ -3,6 +3,7 @@ package com.yyide.doorcontrol;
 
 import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.SPUtils;
+import com.yyide.doorcontrol.rsponbean.AppointmentHomePageInfoRsp;
 import com.yyide.doorcontrol.rsponbean.LoginRsp;
 
 /**
@@ -26,9 +27,15 @@ public class SpData {
 
     public static String  ISCARDSHOW="ISCARDSHOW";
     public static String  SHOWIDENTY="SHOWIDENTY";
+    public static String AppointmentHome = "AppointmentHome";
 
     public static LoginRsp User() {
         return JSON.parseObject(SPUtils.getInstance().getString(LOGINDATA, ""), LoginRsp.class);
     }
+    public static AppointmentHomePageInfoRsp AppointmentHomeData() {
+        return JSON.parseObject(SPUtils.getInstance().getString(AppointmentHome, ""),AppointmentHomePageInfoRsp.class);
+    }
+
+
 
 }
