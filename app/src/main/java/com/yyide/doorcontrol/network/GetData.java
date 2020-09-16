@@ -106,10 +106,11 @@ public class GetData {
             MyHashMap map = new MyHashMap();
             map.putAll(object2Map(bean));
             String encryStr = AuthcodeTwo.authcodeEncode(map.toString(), URL_KEY);
+            String urlRequest = "http://192.168.3.109:8022" + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");
           //  String urlRequest = "http://192.168.3.109:8890" + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");
             // String urlRequest = "http://192.168.3.209:8080" + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");//刘瑞斌本地
             //String urlRequest = "http://192.168.3.13:8080" + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");
-               String urlRequest = "http://120.76.189.190" + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");//黄文飞本地
+              // String urlRequest = "http://120.76.189.190" + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");//黄文飞本地
             L.d("JSON本地", urlRequest);
             L.d("JSON本地", JSON.toJSONString(bean));
             return urlRequest;

@@ -85,6 +85,8 @@
         <activity android:name=".activity.SettingActivity"
             android:screenOrientation="landscape"/>
 
+        <activity android:name=".SelectDoorControlSystemActivity"
+            android:screenOrientation="landscape"/>
 
 
 

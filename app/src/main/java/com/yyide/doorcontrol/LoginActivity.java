@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        MyApp.getInstance().requestData(this, req, new sListener(), new Error());
+        MyApp.getInstance().requestData130(this, req, new sListener(), new Error());
     }
 
     @Override
