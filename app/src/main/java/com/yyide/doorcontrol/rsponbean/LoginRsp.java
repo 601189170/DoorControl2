@@ -29,6 +29,7 @@ public class LoginRsp {
         public int officeId;
         public String loginName;
         public String signId;
+        public int roomId;
 
     }
 }

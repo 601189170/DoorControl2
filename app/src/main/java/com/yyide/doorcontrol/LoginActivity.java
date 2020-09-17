@@ -48,10 +48,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         pd = new LoadingTools().pd(this);
-//        if (AppUtils.isAppDebug()){
-//            et1.setText("FK0064");
-//            et2.setText("123456");
-//        }
+        if (AppUtils.isAppDebug()){
+            et1.setText("zj0212");
+            et2.setText("123456");
+        }
 
         Intent intent = getIntent();
         type = intent.getStringExtra("type");//点击按钮的类型

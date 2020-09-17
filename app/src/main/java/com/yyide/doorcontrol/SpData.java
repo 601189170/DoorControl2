@@ -4,6 +4,7 @@ package com.yyide.doorcontrol;
 import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.SPUtils;
 import com.yyide.doorcontrol.rsponbean.AppointmentHomePageInfoRsp;
+import com.yyide.doorcontrol.rsponbean.GetTodayReservationListRsp;
 import com.yyide.doorcontrol.rsponbean.LoginRsp;
 
 /**
@@ -28,6 +29,7 @@ public class SpData {
     public static String  ISCARDSHOW="ISCARDSHOW";
     public static String  SHOWIDENTY="SHOWIDENTY";
     public static String AppointmentHome = "AppointmentHome";
+    public static String ReservationList = "ReservationList";//预约会议
 
     public static LoginRsp User() {
         return JSON.parseObject(SPUtils.getInstance().getString(LOGINDATA, ""), LoginRsp.class);
@@ -36,6 +38,8 @@ public class SpData {
         return JSON.parseObject(SPUtils.getInstance().getString(AppointmentHome, ""),AppointmentHomePageInfoRsp.class);
     }
 
-
+    public static GetTodayReservationListRsp ReservationList() {
+        return JSON.parseObject(SPUtils.getInstance().getString(ReservationList, ""), GetTodayReservationListRsp.class);
+    }
 
 }

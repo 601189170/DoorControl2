@@ -97,9 +97,6 @@
         </activity>
 
         <!--预约门禁登录界面-->
-        <activity
-            android:name=".activity.AppointmentLoginActivity"
-            android:screenOrientation="landscape" />
         <!--预约门禁主界面-->
         <activity
             android:name=".activity.AppointmentMainActivity"
@@ -108,7 +105,14 @@
         <activity
             android:name=".activity.TodayAppointmentActivity"
             android:screenOrientation="landscape" />
-
+        <!--房间信息-->
+        <activity
+            android:name=".activity.RoomInformationActivity"
+            android:screenOrientation="landscape" />
+        <!--设备报修-->
+        <activity
+            android:name=".activity.EquipmentUpgradingActivity"
+            android:screenOrientation="landscape" />
 
         <activity android:name=".activity.doorControlActivity">
             <!--<intent-filter>-->
