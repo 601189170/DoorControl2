@@ -40,6 +40,7 @@ import com.yyide.doorcontrol.dialog.MsgDiallog;
 import com.yyide.doorcontrol.dialog.UpdataDiallog;
 import com.yyide.doorcontrol.hongruan.db.DbController;
 import com.yyide.doorcontrol.hongruan.faceserver.FaceServer;
+import com.yyide.doorcontrol.requestbean.AccessToApplyReq;
 import com.yyide.doorcontrol.requestbean.GetLastVersionReq;
 import com.yyide.doorcontrol.rsponbean.GetLastVersionRsp;
 import com.yyide.doorcontrol.utils.LoadingTools;
@@ -90,7 +91,9 @@ public class OfficeMenuFragment extends BaseFragment {
                 switch (position){
                     case 0:
                         //门禁申请
-                        new EvCodeDiallog(activity,"").show();
+//                        new EvCodeDiallog(activity,"").show();
+                        getData();
+
                     break;
                     case 1:
                         //切换账号
@@ -122,6 +125,24 @@ public class OfficeMenuFragment extends BaseFragment {
             }
         });
 
+    }
+
+    void getData() {
+        pd.show();
+        AccessToApplyReq req = new AccessToApplyReq();
+        req.classesSinId=SpData.User().data.signId;
+
+        MyApp.getInstance().requestDataBend(this, req, new dateListener(), new updateError());//一德公司管理系统请求跟新
+    }
+
+    class dateListener implements Response.Listener<GetLastVersionRsp> {
+        @Override
+        public void onResponse(final GetLastVersionRsp rsp) {
+            pd.dismiss();
+            if (rsp.status == BaseConstant.REQUEST_SUCCES) {
+
+            }
+        }
     }
     /*更新*/
     void update() {

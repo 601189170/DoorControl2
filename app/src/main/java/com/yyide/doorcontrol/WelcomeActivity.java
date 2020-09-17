@@ -60,7 +60,6 @@ public class WelcomeActivity extends AppCompatActivity {
     void initData() {
         registerDataStr = SPUtils.getInstance().getString(BaseConstant.REGISTERDATA, "");
         loginDataStr = SPUtils.getInstance().getString(SpData.LOGINDATA, "");
-        Log.e("TAG", "loginDataStr: "+JSON.toJSONString(loginDataStr) );
         register = SPUtils.getInstance().getString(BaseConstant.REGISTER, null);
         loginName = SPUtils.getInstance().getString(BaseConstant.LOGINNAME, null);
         passWord = SPUtils.getInstance().getString(BaseConstant.PASSWORD, null);

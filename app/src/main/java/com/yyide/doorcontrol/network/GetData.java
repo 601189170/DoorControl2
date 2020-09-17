@@ -289,7 +289,7 @@ public class GetData {
 
             String encryStr = AuthcodeTwo.authcodeEncode(map.toString(), URL_KEY);
 
-            String urlRequest = "http://192.168.3.110" + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");
+            String urlRequest = "http://192.168.3.110:8022" + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");
 
             L.d("JSON", urlRequest);
 

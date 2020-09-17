@@ -9,9 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.yyide.doorcontrol.MyApp;
 import com.yyide.doorcontrol.R;
+import com.yyide.doorcontrol.SpData;
+import com.yyide.doorcontrol.base.BaseConstant;
 import com.yyide.doorcontrol.base.BaseFragment;
 import com.yyide.doorcontrol.identy.DoorCheackActivity;
+import com.yyide.doorcontrol.requestbean.AccessToApplyReq;
+import com.yyide.doorcontrol.requestbean.OfficeAccesshomeReq;
+import com.yyide.doorcontrol.rsponbean.GetLastVersionRsp;
+import com.yyide.doorcontrol.rsponbean.OfficeAccesshomeRsp;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,10 +52,36 @@ public class OfficeHomeFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        getData();
 
     }
 
+    void getData() {
 
+        OfficeAccesshomeReq req = new OfficeAccesshomeReq();
+        req.roomId= SpData.User().data.roomId;
+
+
+        MyApp.getInstance().requestDataBend(this, req, new dateListener(), new error());
+    }
+
+    class dateListener implements Response.Listener<OfficeAccesshomeRsp> {
+        @Override
+        public void onResponse(final OfficeAccesshomeRsp rsp) {
+
+//            if (rsp.status == BaseConstant.REQUEST_SUCCES) {
+//
+//            }
+        }
+    }
+    class error implements Response.ErrorListener {
+
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
+
+
+        }
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

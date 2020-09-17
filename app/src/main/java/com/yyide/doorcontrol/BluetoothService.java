@@ -1,29 +1,20 @@
 package com.yyide.doorcontrol;
 
-import android.Manifest;
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.Service;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.IBinder;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.google.gson.reflect.TypeToken;
-import com.ttlock.bl.sdk.api.ExtendedBluetoothDevice;
 import com.ttlock.bl.sdk.api.TTLockClient;
 import com.ttlock.bl.sdk.callback.ControlLockCallback;
 import com.ttlock.bl.sdk.callback.ResetLockCallback;
-import com.ttlock.bl.sdk.callback.ScanLockCallback;
 import com.ttlock.bl.sdk.constant.ControlAction;
 import com.ttlock.bl.sdk.entity.LockError;
 import com.ttlock.bl.sdk.util.GsonUtil;
-import com.yyide.doorcontrol.activity.LockActivity;
 import com.yyide.doorcontrol.base.BaseConstant;
 
 import org.json.JSONArray;
