@@ -185,22 +185,6 @@ public class MyApp extends Application {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private class CardBroadcast implements Runnable {
 
         private String cardNo;
