@@ -70,8 +70,6 @@ public class DoorCardAppointmentFragment extends BaseFragment implements Observe
     }
 
     void Identity(String cardNo) {
-        //EquipmentCertificationCtoReq req = new EquipmentCertificationCtoReq();
-
         AppointmentOpenDoorReq req=new AppointmentOpenDoorReq();
         req.cardNo = "456123";
         req.officeId = SpData.User().data.officeId;
