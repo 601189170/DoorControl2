@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="500dp"
+    android:background="@drawable/bg_white"
+    android:layout_height="200dp">
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+
+    <TextView
+        android:id="@+id/msg"
+        style="@style/TextSize_28"
+        android:textStyle="normal"
+        android:gravity="center"
+
+        android:textColor="@color/black2"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content" />
+        <TextView
+            style="@style/TextSize_24black"
+            android:textColor="@color/home_E7"
+            android:textStyle="normal"
+            android:id="@+id/msg2"
+            android:layout_marginTop="19dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <TextView
+        android:background="@color/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="否"
+            android:id="@+id/cancel"
+            style="@style/TextSize_24black"
+            android:textStyle="normal"
+            android:gravity="center"
+            android:textColor="@color/blue7"
+            android:layout_height="match_parent" />
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="是"
+            android:id="@+id/yes"
+            style="@style/TextSize_24black"
+            android:textStyle="normal"
+            android:gravity="center"
+            android:background="@drawable/bg_right2"
+            android:textColor="@color/white"
+            android:layout_height="match_parent" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
+</LinearLayout>

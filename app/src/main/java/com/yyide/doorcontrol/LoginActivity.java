@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.yyide.doorcontrol.activity.AppointmentMainActivity;
+import com.yyide.doorcontrol.activity.OfficeMainActivity;
 import com.yyide.doorcontrol.base.BaseConstant;
 import com.yyide.doorcontrol.requestbean.LoginReq;
 import com.yyide.doorcontrol.rsponbean.LoginRsp;
@@ -94,6 +95,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 SPUtils.getInstance().put(SpData.LOGINDATA, JSON.toJSONString(rsp));
                 if (type.equals(SpData.appointment)) {//点击类型是预约门禁
                     startActivity(new Intent(LoginActivity.this, AppointmentMainActivity.class));
+                }else if (type.equals(SpData.OfficeType)){
+                    startActivity(new Intent(LoginActivity.this, OfficeMainActivity.class));
                 }
 
             } else

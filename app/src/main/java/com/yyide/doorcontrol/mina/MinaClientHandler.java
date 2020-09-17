@@ -215,7 +215,7 @@ public class MinaClientHandler extends IoHandlerAdapter {
     void getImgs(String time) {
         GetFacePhotoByUpdateDateReq req = new GetFacePhotoByUpdateDateReq();
         req.time=time;
-//        req.officeId= SpData.User().data.officeId;
+        req.officeId= SpData.User().data.officeId;
         MyApp.getInstance().requestDataPost(this, req, new AuthListener(), new Error());
     }
 

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -86,7 +87,8 @@ public class RegisterActivity extends AppCompatActivity {
                 et1.setText(SDcarfile.read(registfileName));
             }
         });
-
+        if (AppUtils.isAppDebug())
+            startActivity(new Intent(this,LoginOfficeActivity.class));
 
     }
 

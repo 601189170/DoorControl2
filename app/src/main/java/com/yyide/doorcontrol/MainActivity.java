@@ -2,11 +2,7 @@ package com.yyide.doorcontrol;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
-import com.yyide.doorcontrol.adapter.RecyleviewIndexAdapter;
 
 import butterknife.BindView;
 

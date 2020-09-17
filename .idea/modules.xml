@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DemoDoor.iml" filepath="$PROJECT_DIR$/DemoDoor.iml" />
+      <module fileurl="file://D:\DoorControl2\DemoDoor.iml" filepath="D:\DoorControl2\DemoDoor.iml" />
       <module fileurl="file://$PROJECT_DIR$/DoorControl2.iml" filepath="$PROJECT_DIR$/DoorControl2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bluetoothlibrary/bluetoothlibrary.iml" filepath="$PROJECT_DIR$/bluetoothlibrary/bluetoothlibrary.iml" />
     </modules>
   </component>
 </project>

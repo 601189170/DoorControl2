@@ -21,14 +21,14 @@ import static com.yyide.doorcontrol.utils.Object2Map.object2Map;
  * Created by Hao on 16/9/6.
  */
 public class GetData {
-    // public static final String URL_IP = "120.76.189.190";
-    public static final String URL_IP = "192.168.3.130";
+    public static final String URL_IP = "120.76.189.190";
+
 
 
     // 音频上传的接口
 //    public static final String UPLOAD_URL = URL + "upload.html";
     public static final String FaceUrl = "http://120.76.189.190:8099/java-external-docking";
-    //    public static final String FaceUrl = "http://192.168.3.130:8000/java-docking";
+//    public static final String FaceUrl = "http://192.168.3.130:8000/java-docking";
     public static final String url2 = "http://120.76.189.190";
 
     public static final String url3 = "http://192.168.3.130";
@@ -42,23 +42,35 @@ public class GetData {
      * 网络请求的解析的密匙key
      **/
     public final static String URL_KEY = "24ca8a8a8a8888439b926572b5fb6233fb";
-
     public static String YydUrl2() {
         String url;
         String port = SPUtils.getInstance().getString(BaseConstant.NUMBER, GetData.URL_IP);
 
         if (port.contains(":")) {
             String[] ip = port.split(":");
-            url = "http://" + ip[0];
-            Log.e("TAG", "MinaUrl1: " + url);
-        } else {
-            url = "http://" + SPUtils.getInstance().getString(BaseConstant.NUMBER, URL_IP);
-            Log.e("TAG", "MinaUrl2: " + url);
+            url="http://" + ip[0];
+            Log.e("TAG", "MinaUrl1: "+ url);
+        }else {
+            url="http://" + SPUtils.getInstance().getString(BaseConstant.NUMBER, URL_IP);
+            Log.e("TAG", "MinaUrl2: "+ url);
         }
-        return url + BIp;
+        return  url+BIp;
 //        return "http://" + SPUtils.getInstance().getString(BaseConstant.NUMBER, URL_IP) + BIp;
     }
+    public static <T> String requestUrlYydUrl(BaseBeanReq<T> bean) {
 
+        try {
+            MyHashMap map = new MyHashMap();
+            map.putAll(object2Map(bean));
+            String encryStr = AuthcodeTwo.authcodeEncode(map.toString(), URL_KEY);
+            String urlRequest =YydUrl()+ bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");
+            L.d("JSON190", urlRequest);
+            L.d("JSON190", JSON.toJSONString(bean));
+            return urlRequest;
+        } catch (Exception e) {
+            return null;
+        }
+    }
     public static <T> String requestUrlBP(BaseBeanReq<T> bean) {
 
         try {
@@ -83,24 +95,6 @@ public class GetData {
         }
 
     }
-
-    public static String MinaUrl2() {
-        String url;
-        String port = SPUtils.getInstance().getString(BaseConstant.NUMBER, GetData.URL_IP);
-
-        if (port.contains(":")) {
-            String[] ip = port.split(":");
-            url = "http://" + ip[0];
-            Log.e("TAG", "MinaUrl1: " + url);
-        } else {
-            url = "http://" + SPUtils.getInstance().getString(BaseConstant.NUMBER, URL_IP);
-            Log.e("TAG", "MinaUrl2: " + url);
-        }
-        return url;
-
-    }
-
-
     /**
      * 独立操作130端口请求
      */
@@ -124,7 +118,21 @@ public class GetData {
 
     }
 
+    public static String MinaUrl2() {
+        String url;
+        String port = SPUtils.getInstance().getString(BaseConstant.NUMBER, GetData.URL_IP);
 
+        if (port.contains(":")) {
+            String[] ip = port.split(":");
+            url="http://" + ip[0];
+            Log.e("TAG", "MinaUrl1: "+ url);
+        }else {
+            url="http://" + SPUtils.getInstance().getString(BaseConstant.NUMBER, URL_IP);
+            Log.e("TAG", "MinaUrl2: "+ url);
+        }
+        return  url;
+
+    }
     public static <T> String requestUrlyd(BaseBeanReq<T> bean) {
 
         try {
@@ -149,7 +157,6 @@ public class GetData {
         }
 
     }
-
     public static <T> String requestUrlHRFace(BaseBeanReq<T> bean) {
 
         try {
@@ -174,7 +181,6 @@ public class GetData {
         }
 
     }
-
     public static <T> String requestUrl(BaseBeanReq<T> bean) {
 
         try {
@@ -199,7 +205,6 @@ public class GetData {
         }
 
     }
-
     public static <T> String requestUrl3(BaseBeanReq<T> bean) {
 
         try {
@@ -210,7 +215,7 @@ public class GetData {
 
             String encryStr = AuthcodeTwo.authcodeEncode(map.toString(), URL_KEY);
 
-            String urlRequest = url() + bean.myAddr();
+            String urlRequest = url() + bean.myAddr() ;
 
             L.d("JSON2", urlRequest);
 
@@ -224,7 +229,6 @@ public class GetData {
         }
 
     }
-
     public static <T> String requestUrl2(BaseBeanReq<T> bean) {
 
         try {
@@ -275,7 +279,30 @@ public class GetData {
         }
 
     }
+    public static <T> String requestUrlBend(BaseBeanReq<T> bean) {
 
+        try {
+
+            MyHashMap map = new MyHashMap();
+
+            map.putAll(object2Map(bean));
+
+            String encryStr = AuthcodeTwo.authcodeEncode(map.toString(), URL_KEY);
+
+            String urlRequest = "http://192.168.3.110" + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");
+
+            L.d("JSON", urlRequest);
+
+            L.d("JSON", JSON.toJSONString(bean));
+
+            return urlRequest;
+
+        } catch (Exception e) {
+
+            return null;
+        }
+
+    }
 
     public static <T> String requestFaceUrl(BaseBeanReq<T> bean) {
 
@@ -309,11 +336,9 @@ public class GetData {
     public static String imageUrl() {
         return "http://" + SPUtils.getInstance().getString(BaseConstant.NUMBER, URL_IP) + "/";
     }
-
     public static String imageUrl2() {
-        return "http://" + "120.76.189.190" + "/";
+        return "http://" + "120.76.189.190"+"/";
     }
-
     public static String YydUrl() {
 //        Log.e("TAG", "YydUrl: "+ SPUtils.getInstance().getString(BaseConstant.NUMBER));
         return "http://" + SPUtils.getInstance().getString(BaseConstant.NUMBER, URL_IP) + BIp;

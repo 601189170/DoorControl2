@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+
+<LinearLayout
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="70dp">
+    <CheckedTextView
+        style="@style/TextSize_24black"
+        android:id="@+id/item"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="@color/seirport_tab_color"
+        android:layout_width="match_parent"
+        android:background="@drawable/seirport_tab"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
+
+</LinearLayout>

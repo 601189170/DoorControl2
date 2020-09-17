@@ -68,7 +68,7 @@ public class SelectDoorControlSystemActivity extends BaseActivity implements Vie
                 break;
             case R.id.tv_office:
                 intent=new Intent(SelectDoorControlSystemActivity.this,LoginActivity.class);
-                intent.putExtra("type","office");
+                intent.putExtra("type",SpData.OfficeType);
                 startActivity(intent);
                 break;
             case R.id.tv_setting:

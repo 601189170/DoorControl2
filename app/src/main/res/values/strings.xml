@@ -1,4 +1,11 @@
 <resources>
+    <string-array name="Serial_item">
+        <item>/dev/ttyS0</item>
+        <item>/dev/ttyS1</item>
+        <item>/dev/ttyS2</item>
+        <item>/dev/ttyS3</item>
+        <item>/dev/ttyS4</item>
+    </string-array>
     <string name="app_name">门禁系统</string>
     <string name="voice_rec">手指上滑，取消发送</string>
     <string name="voice_cancel">松开手指，取消发送</string>

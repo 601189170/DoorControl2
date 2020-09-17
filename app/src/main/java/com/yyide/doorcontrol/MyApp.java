@@ -233,7 +233,22 @@ public class MyApp extends Application {
         queue.add(request);
 
     }
+    public <T> void requestDataYydUrl(Object tag, BaseBeanReq<T> object, Response.Listener<T> listener,
+                                      Response.ErrorListener errorListener) {
+        MyHashMap map = new MyHashMap();
+        map.putAll(object2Map(object));
+        String encryStr = AuthcodeTwo.authcodeEncode(map.toString(), GetData.URL_KEY);
+        FastJsonRequest<T> request = new FastJsonRequest<>(GetData.requestUrlYydUrl(object),
+                object.myTypeReference(), listener, errorListener,
+                encryStr);
+        request.setShouldCache(true);
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                5000, 1,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        request.setTag(tag);
+        queue.add(request);
 
+    }
     /**
      * 独立操作130端口请求
      */
@@ -360,7 +375,22 @@ public class MyApp extends Application {
 
 
 
+    public <T> void requestDataBend(Object tag, BaseBeanReq<T> object, Response.Listener<T> listener,
+                                    Response.ErrorListener errorListener) {
+        MyHashMap map = new MyHashMap();
+        map.putAll(object2Map(object));
+        String encryStr = AuthcodeTwo.authcodeEncode(map.toString(), GetData.URL_KEY);
+        FastJsonRequest<T> request = new FastJsonRequest<>(GetData.requestUrlBend(object),
+                object.myTypeReference(), listener, errorListener,
+                encryStr);
+        request.setShouldCache(true);
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                5000, 1,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        request.setTag(tag);
+        queue.add(request);
 
+    }
 
 
 

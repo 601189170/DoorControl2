@@ -3,6 +3,7 @@ package com.yyide.doorcontrol;
 
 import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.SPUtils;
+
 import com.yyide.doorcontrol.rsponbean.AppointmentHomePageInfoRsp;
 import com.yyide.doorcontrol.rsponbean.GetTodayReservationListRsp;
 import com.yyide.doorcontrol.rsponbean.LoginRsp;
@@ -31,6 +32,7 @@ public class SpData {
     public static String AppointmentHome = "AppointmentHome";
     public static String ReservationList = "ReservationList";//预约会议
     public static String appointment="appointment";
+    public static String OfficeType="OfficeType";
 
     public static LoginRsp User() {
         return JSON.parseObject(SPUtils.getInstance().getString(LOGINDATA, ""), LoginRsp.class);

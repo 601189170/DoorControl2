@@ -1,16 +1,18 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
-
+greendao {
+    schemaVersion 1 //当前数据库版本
+}
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.yyide.doorcontrol"
         minSdkVersion 19
-        //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -59,13 +61,11 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.2'
     // 添加
     implementation 'org.greenrobot:eventbus:3.0.0'
-    implementation project(':bluetoothlibrary')
-    implementation(name: 'ttlock-release-3.0.7', ext: 'aar')
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-
-
-
-
-
+    api project(':bluetoothlibrary')
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    //    implementation(name: 'ttlock-release-3.0.7', ext: 'aar')
+    //    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    //    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation files('libs/slf4j-api-1.7.21.jar')
 }

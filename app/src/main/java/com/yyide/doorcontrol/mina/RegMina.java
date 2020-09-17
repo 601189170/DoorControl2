@@ -27,7 +27,8 @@ public class RegMina {
 
     public long update_time;
 
-//    public int office_id = SpData.User().data.officeId;
-    public int office_id = SpData.User() != null ? SpData.User().data.officeId : -1;
+    public int office_id = 16932;
+//    public int office_id = SpData.User() != null ? SpData.User().data.officeId : -1;
+//    public int office_id = SpData.User() != null ? SpData.User().data.officeId : -1;
 //
 }

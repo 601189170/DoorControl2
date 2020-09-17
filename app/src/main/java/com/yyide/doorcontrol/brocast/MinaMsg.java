@@ -24,7 +24,8 @@ public class MinaMsg {
     public static String MinaMsg(String type) {
         RegMina regMina = new RegMina();
         regMina.msgType = type;
-        regMina.alias = SPUtils.getInstance().getString(BaseConstant.LOGINNAME, null);
+//        regMina.alias = SPUtils.getInstance().getString(BaseConstant.LOGINNAME, null);
+        regMina.alias = "MJ0027";
         regMina.androidId = DeviceUtils.getAndroidID();
         regMina.incremental = Build.VERSION.INCREMENTAL;
         regMina.versionCode = AppUtils.getAppVersionCode();

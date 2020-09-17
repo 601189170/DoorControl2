@@ -29,11 +29,12 @@ public class WelcomeActivity extends AppCompatActivity {
     /*序列号数据，用户信息，序列号、登录名、密码*/
     private String registerDataStr, loginDataStr, register, loginName, passWord;
 
-//    public static String IpNum = "1592";
-    //public static String IpNum = "1003";
+    public static String IpNum = "1000";
+//    public static String IpNum = "1206";
+//    public static String IpNum = "1003";
 //    public static String IpNum = "45646465";
 //    public static String IpNum = "198";
-      public static String IpNum = "900";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,12 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         ButterKnife.bind(this);
         initData();
+
         getIp();
+//        SDcarfile.save(BPUtils.startName, AppUtils.getAppPackageName());
+
+
+
     }
 
     @Override
@@ -64,6 +70,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     class ipListener implements Response.Listener<GetAddressBySerialNumberRsp> {
+
         @Override
         public void onResponse(GetAddressBySerialNumberRsp rsp) {
             if (rsp.status == BaseConstant.REQUEST_SUCCES) {
@@ -74,6 +81,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     class ipErrorListener implements Response.ErrorListener {
+
         @Override
         public void onErrorResponse(VolleyError volleyError) {
             if (TextUtils.isEmpty(registerDataStr))
@@ -108,6 +116,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     class registerListener implements Response.Listener<ValidSerialKeyRsp> {
+
         @Override
         public void onResponse(ValidSerialKeyRsp rsp) {
             if (rsp.status == BaseConstant.REQUEST_SUCCES) {
@@ -119,6 +128,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     class registerErrorListener implements Response.ErrorListener {
+
         @Override
         public void onErrorResponse(VolleyError volleyError) {
             if (TextUtils.isEmpty(registerDataStr))
@@ -138,6 +148,7 @@ public class WelcomeActivity extends AppCompatActivity {
                             break;
                     }
             }
+
         }
     }
 
@@ -161,6 +172,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     class loginErrorListener implements Response.ErrorListener {
+
         @Override
         public void onErrorResponse(VolleyError volleyError) {
             goActivity(LoginActivity.class);
