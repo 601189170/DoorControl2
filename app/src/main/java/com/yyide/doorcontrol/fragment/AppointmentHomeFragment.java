@@ -100,8 +100,8 @@ public class AppointmentHomeFragment extends BaseFragment {
      */
     private void setAllData(AppointmentHomePageInfoRsp rsp) {
         Log.e("TAG", "setAllData+Rsp: " + JSON.toJSON(rsp));
-        if (null != rsp && null != rsp.data.status) {
-            if (rsp.data.status.equals("1")) {
+        if (null != rsp && null != rsp.data.homePageStatus) {
+            if (rsp.data.homePageStatus.equals("1")) {
                 ll_status1.setVisibility(View.VISIBLE);
 
 
@@ -110,11 +110,11 @@ public class AppointmentHomeFragment extends BaseFragment {
 
 
 
-            } else if (rsp.data.status.equals("2")) {
+            } else if (rsp.data.homePageStatus.equals("2")) {
 
-            } else if (rsp.data.status.equals("3")) {
+            } else if (rsp.data.homePageStatus.equals("3")) {
 
-            } else if (rsp.data.status.equals("4")) {
+            } else if (rsp.data.homePageStatus.equals("4")) {
 
             }
 

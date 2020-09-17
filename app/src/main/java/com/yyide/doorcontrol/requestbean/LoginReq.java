@@ -15,7 +15,6 @@ public class LoginReq extends BaseBeanReq<LoginRsp> {
 //    passWord	是	string	密码
 
     public String loginName;
-
     public String password;
 
     @Override

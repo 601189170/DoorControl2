@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.yyide.doorcontrol.activity.AppointmentMainActivity;
 import com.yyide.doorcontrol.base.BaseConstant;
 import com.yyide.doorcontrol.requestbean.LoginReq;
 import com.yyide.doorcontrol.rsponbean.LoginRsp;
@@ -48,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         pd = new LoadingTools().pd(this);
-        if (AppUtils.isAppDebug()){
+        if (AppUtils.isAppDebug()) {
             et1.setText("zj0212");
             et2.setText("123456");
         }
@@ -87,14 +88,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         public void onResponse(LoginRsp rsp) {
             Log.e("TAG", "LoginRsp: " + JSON.toJSON(rsp));
             pd.dismiss();
-            if (rsp.status == BaseConstant.REQUEST_SUCCES) {
+            if (rsp.status == BaseConstant.REQUEST_SUCCES || rsp.status == BaseConstant.REQUEST_SUCCES2) {
                 SPUtils.getInstance().put(BaseConstant.LOGINNAME, et1.getText().toString());
                 SPUtils.getInstance().put(BaseConstant.PASSWORD, et2.getText().toString());
                 SPUtils.getInstance().put(SpData.LOGINDATA, JSON.toJSONString(rsp));
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                Log.e("TAG", "SPUtils: " + JSON.toJSON(rsp));
-//                L.j(JSON.toJSONString(rsp.data.cardRight));
-                LoginActivity.this.finish();
+                if (type.equals(SpData.appointment)) {//点击类型是预约门禁
+                    startActivity(new Intent(LoginActivity.this, AppointmentMainActivity.class));
+                }
+
             } else
                 Toast.makeText(LoginActivity.this, rsp.msg, Toast.LENGTH_SHORT).show();
 //                tips.setText(rsp.info);
@@ -104,7 +105,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     class Error implements Response.ErrorListener {
         @Override
         public void onErrorResponse(VolleyError volleyError) {
-           // pd.dismiss();
+            Log.e("TAG","LoginRsp: " + JSON.toJSON(volleyError));
+            pd.dismiss();
             new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.NORMAL_TYPE)
                     .setTitleText("网络设置").setContentText("网络异常，请检查网络。").setCancelText("取消").setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override

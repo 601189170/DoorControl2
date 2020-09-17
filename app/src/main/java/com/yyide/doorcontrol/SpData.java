@@ -30,6 +30,7 @@ public class SpData {
     public static String  SHOWIDENTY="SHOWIDENTY";
     public static String AppointmentHome = "AppointmentHome";
     public static String ReservationList = "ReservationList";//预约会议
+    public static String appointment="appointment";
 
     public static LoginRsp User() {
         return JSON.parseObject(SPUtils.getInstance().getString(LOGINDATA, ""), LoginRsp.class);

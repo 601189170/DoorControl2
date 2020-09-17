@@ -57,8 +57,8 @@ public class SelectDoorControlSystemActivity extends BaseActivity implements Vie
         switch (view.getId()) {
             case R.id.tv_appointment:
                 Toast.makeText(this, "点击预约门禁", Toast.LENGTH_SHORT).show();
-                intent=new Intent(SelectDoorControlSystemActivity.this, AppointmentLoginActivity.class);
-                intent.putExtra("type","order_project");
+                intent=new Intent(SelectDoorControlSystemActivity.this, LoginActivity.class);
+                intent.putExtra("type",SpData.appointment);//预约门禁
                 startActivity(intent);
                 break;
             case R.id.tv_hostel:
