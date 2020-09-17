@@ -104,6 +104,10 @@
         <activity
             android:name=".activity.AppointmentMainActivity"
             android:screenOrientation="landscape" />
+        <!--今日预约界面-->
+        <activity
+            android:name=".activity.TodayAppointmentActivity"
+            android:screenOrientation="landscape" />
 
 
         <activity android:name=".activity.doorControlActivity">
