@@ -11,7 +11,7 @@ public class AppointmentHomePageInfoReq  extends BaseBeanReq<AppointmentHomePage
     public String signId;
     @Override
     public String myAddr() {
-        return "/java-door/api/reservation-door/homePageList";
+        return "/api/reservation-door/homePageList";
     }
 
     @Override

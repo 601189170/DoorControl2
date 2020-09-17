@@ -61,7 +61,6 @@ public class OfficeHomeFragment extends BaseFragment {
         OfficeAccesshomeReq req = new OfficeAccesshomeReq();
         req.roomId= SpData.User().data.roomId;
 
-
         MyApp.getInstance().requestDataBend(this, req, new dateListener(), new error());
     }
 

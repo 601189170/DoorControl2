@@ -114,6 +114,11 @@
 
 
 
+    <ImageView
+        android:id="@+id/img_open_door"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"/>
 
 
 </FrameLayout>

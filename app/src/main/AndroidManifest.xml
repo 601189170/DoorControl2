@@ -67,7 +67,7 @@
         <activity
             android:name=".activity.OfficeMainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape">
             <!--<intent-filter>-->
             <!--<action android:name="android.intent.action.MAIN" />-->
 
@@ -77,11 +77,11 @@
         <activity
             android:name=".LoginOfficeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape">
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
 
@@ -92,7 +92,7 @@
         <activity
             android:name=".WelcomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -109,8 +109,8 @@
             android:screenOrientation="landscape">
 
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
 
@@ -123,6 +123,17 @@
         <activity
             android:name=".activity.TodayAppointmentActivity"
             android:screenOrientation="landscape" />
+        <!--预约门禁认证界面-->
+        <activity
+            android:name=".identy.DoorCheckAppointmentActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/NoTitleDialog2" />
+        <!--预约系统设置认证界面-->
+        <activity
+            android:name=".identy.AppointmentSettingCheckActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/NoTitleDialog2" />
+
         <!--房间信息-->
         <activity
             android:name=".activity.RoomInformationActivity"
@@ -146,6 +157,7 @@
             android:name=".identy.DoorCheackActivity"
             android:screenOrientation="landscape"
             android:theme="@style/NoTitleDialog2" />
+
         <service
             android:name=".BluetoothService"
             android:enabled="true"

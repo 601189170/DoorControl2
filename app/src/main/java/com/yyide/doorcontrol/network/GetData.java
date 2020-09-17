@@ -103,7 +103,7 @@ public class GetData {
             MyHashMap map = new MyHashMap();
             map.putAll(object2Map(bean));
             String encryStr = AuthcodeTwo.authcodeEncode(map.toString(), URL_KEY);
-            String urlRequest = "http://192.168.3.130:8022" + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");//130环境
+            String urlRequest = "http://192.168.3.130:8022/java-door" + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");//130环境
             //  String urlRequest = "http://192.168.3.109:8022" + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");  //本地
             //  String urlRequest = "http://192.168.3.109:8890" + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");
             // String urlRequest = "http://192.168.3.209:8080" + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");//刘瑞斌本地

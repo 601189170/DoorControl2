@@ -76,7 +76,7 @@ public class MinaClientHandler extends IoHandlerAdapter {
     List<UpdateFacePhotoReq.UpdateBean> list=new ArrayList<>();
     public  int count;
     GetFacePhotoByUpdateDateRsp bean;
-
+    public static boolean IsCard = true;
     public static LockDialog dialog;
     ImgFaceRsp imgrsp;
 //    String str="{\"msgType\":\"24\",\"data\":\"[{\\\"personName\\\":\\\"刘义\\\",\\\"officeId\\\":\\\"16971\\\",\\\"crop_name\\\":\\\"abc.jpg\\\",\\\"photo\\\":\\\"http://we.yyide.com:8077//static/visitor/image/20200701/1593583673478140628.jpg\\\",\\\"id\\\":\\\"094b6db9aca64217a553aba04a6145d7\\\"}]\"}";

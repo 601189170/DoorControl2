@@ -1,5 +1,6 @@
 package com.yyide.doorcontrol.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,11 +21,13 @@ import com.yyide.doorcontrol.R;
 import com.yyide.doorcontrol.SpData;
 import com.yyide.doorcontrol.base.BaseConstant;
 import com.yyide.doorcontrol.base.BaseFragment;
+import com.yyide.doorcontrol.identy.DoorCheckAppointmentActivity;
 import com.yyide.doorcontrol.requestbean.AppointmentHomePageInfoReq;
 import com.yyide.doorcontrol.rsponbean.AppointmentHomePageInfoRsp;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class AppointmentHomeFragment extends BaseFragment {
 
@@ -45,6 +49,9 @@ public class AppointmentHomeFragment extends BaseFragment {
     TextView tv_next_meeting_name;
     @BindView(R.id.tv_free_time)
     TextView tv_free_time;
+
+    @BindView(R.id.img_open_door)
+    ImageView img_open_door;
 
 
     @Nullable
@@ -75,6 +82,23 @@ public class AppointmentHomeFragment extends BaseFragment {
         MyApp.getInstance().requestData130(this, req, new Listener(), new Error());
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @OnClick(R.id.img_open_door)
+    public void onViewClicked(View view) {
+        switch (view.getId()){
+            case R.id.img_open_door:
+                startActivity(new Intent(getActivity(), DoorCheckAppointmentActivity.class));
+                break;
+
+
+        }
+
+    }
+
     class Listener implements Response.Listener<AppointmentHomePageInfoRsp> {
         @Override
         public void onResponse(AppointmentHomePageInfoRsp rsp) {
@@ -103,11 +127,6 @@ public class AppointmentHomeFragment extends BaseFragment {
         if (null != rsp && null != rsp.data.homePageStatus) {
             if (rsp.data.homePageStatus.equals("1")) {
                 ll_status1.setVisibility(View.VISIBLE);
-
-
-
-
-
 
 
             } else if (rsp.data.homePageStatus.equals("2")) {
