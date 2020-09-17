@@ -11,6 +11,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.SPUtils;
+import com.yyide.doorcontrol.activity.AppointmentMainActivity;
+import com.yyide.doorcontrol.activity.OfficeMainActivity;
 import com.yyide.doorcontrol.base.BaseConstant;
 import com.yyide.doorcontrol.network.GetData;
 import com.yyide.doorcontrol.requestbean.GetAddressBySerialNumberReq;
@@ -29,7 +31,7 @@ public class WelcomeActivity extends AppCompatActivity {
     /*序列号数据，用户信息，序列号、登录名、密码*/
     private String registerDataStr, loginDataStr, register, loginName, passWord;
 
-    public static String IpNum = "1000";
+    public static String IpNum = "1111";
 //    public static String IpNum = "1206";
 //    public static String IpNum = "1003";
 //    public static String IpNum = "45646465";
@@ -58,6 +60,7 @@ public class WelcomeActivity extends AppCompatActivity {
     void initData() {
         registerDataStr = SPUtils.getInstance().getString(BaseConstant.REGISTERDATA, "");
         loginDataStr = SPUtils.getInstance().getString(SpData.LOGINDATA, "");
+        Log.e("TAG", "loginDataStr: "+JSON.toJSONString(loginDataStr) );
         register = SPUtils.getInstance().getString(BaseConstant.REGISTER, null);
         loginName = SPUtils.getInstance().getString(BaseConstant.LOGINNAME, null);
         passWord = SPUtils.getInstance().getString(BaseConstant.PASSWORD, null);
@@ -97,11 +100,36 @@ public class WelcomeActivity extends AppCompatActivity {
                             goActivity(RegisterActivity.class);
                             break;
                         case 2:
-                            goActivity(TextUtils.isEmpty(loginDataStr) ? LoginActivity.class : MainActivity.class);
+//                            goActivity(TextUtils.isEmpty(loginDataStr) ? LoginActivity.class : MainActivity.class);
+//                            goActivity(TextUtils.isEmpty(loginDataStr) ? SelectDoorControlSystemActivity.class : MainActivity.class);
+                            if (TextUtils.isEmpty(loginDataStr)){
+                                goActivity(SelectDoorControlSystemActivity.class);
+                            }else {
+                                goMainAcvity();
+                            }
                             break;
                     }
             }
         }
+    }
+    void goMainAcvity(){
+
+        switch (SpData.getLoginType()){
+            case "1":
+                goActivity(OfficeMainActivity.class);
+                break;
+            case "2":
+                goActivity(AppointmentMainActivity.class);
+                break;
+            case "3":
+                break;
+                case "":
+                    goActivity(SelectDoorControlSystemActivity.class);
+                    break;
+
+        }
+        finish();
+
     }
 
     void getRegister() {
@@ -144,7 +172,12 @@ public class WelcomeActivity extends AppCompatActivity {
                             goActivity(RegisterActivity.class);
                             break;
                         case 2:
-                            goActivity(TextUtils.isEmpty(loginDataStr) ? LoginActivity.class : MainActivity.class);
+//                            goActivity(TextUtils.isEmpty(loginDataStr) ? LoginActivity.class : MainActivity.class);
+                            if (TextUtils.isEmpty(loginDataStr)){
+                                goActivity(SelectDoorControlSystemActivity.class);
+                            }else {
+                                goMainAcvity();
+                            }
                             break;
                     }
             }
@@ -166,8 +199,30 @@ public class WelcomeActivity extends AppCompatActivity {
             if (rsp.status == BaseConstant.REQUEST_SUCCES) {
                 Log.e("TAG", "LoginRspLoginRsp: "+JSON.toJSONString(rsp) );
                 SPUtils.getInstance().put(SpData.LOGINDATA, JSON.toJSONString(rsp));
-                goActivity(MainActivity.class);
-            } else goActivity(LoginActivity.class);
+//                switch (rsp.data.scId){
+//                    //门禁类别id  2，会议门禁  1，普通门禁=办公室门禁， 3，宿舍门禁
+//                    case "1":
+//                        goActivity(OfficeMainActivity.class);
+//                        break;
+//                    case "2":
+//                        goActivity(SelectDoorControlSystemActivity.class);
+//                        break;
+//                    case "3":
+//
+//                        break;
+//                }
+                goMainAcvity();
+
+
+            } else {
+                if (TextUtils.isEmpty(loginDataStr)){
+                    goActivity(SelectDoorControlSystemActivity.class);
+                }else {
+                    goMainAcvity();
+                }
+
+            }
+
         }
     }
 
@@ -175,7 +230,12 @@ public class WelcomeActivity extends AppCompatActivity {
 
         @Override
         public void onErrorResponse(VolleyError volleyError) {
-            goActivity(LoginActivity.class);
+//            goActivity(LoginActivity.class);
+            if (TextUtils.isEmpty(loginDataStr)){
+                goActivity(SelectDoorControlSystemActivity.class);
+            }else {
+                goMainAcvity();
+            }
         }
     }
 

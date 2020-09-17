@@ -87,8 +87,8 @@ public class RegisterActivity extends AppCompatActivity {
                 et1.setText(SDcarfile.read(registfileName));
             }
         });
-        if (AppUtils.isAppDebug())
-            startActivity(new Intent(this,LoginOfficeActivity.class));
+//        if (AppUtils.isAppDebug())
+//            startActivity(new Intent(this,LoginOfficeActivity.class));
 
     }
 
@@ -129,8 +129,9 @@ public class RegisterActivity extends AppCompatActivity {
                 SDcarfile.save(registfileName, et1.getText().toString());
                 SPUtils.getInstance().put(BaseConstant.REGISTER, et1.getText().toString());
                 SPUtils.getInstance().put(BaseConstant.REGISTERDATA, JSON.toJSONString(rsp));
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                            RegisterActivity.this.finish();
+//                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+//                            RegisterActivity.this.finish();
+                startActivity(new Intent(RegisterActivity.this,SelectDoorControlSystemActivity.class));
             } else
                 ToastUtils.showShort(rsp.info);
         }

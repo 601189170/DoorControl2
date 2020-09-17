@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        MyApp.getInstance().requestData130(this, req, new sListener(), new Error());
+        MyApp.getInstance().requestData(this, req, new sListener(), new Error());
     }
 
     @Override
@@ -93,11 +93,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 SPUtils.getInstance().put(BaseConstant.LOGINNAME, et1.getText().toString());
                 SPUtils.getInstance().put(BaseConstant.PASSWORD, et2.getText().toString());
                 SPUtils.getInstance().put(SpData.LOGINDATA, JSON.toJSONString(rsp));
-                if (type.equals(SpData.appointment)) {//点击类型是预约门禁
-                    startActivity(new Intent(LoginActivity.this, AppointmentMainActivity.class));
-                }else if (type.equals(SpData.OfficeType)){
-                    startActivity(new Intent(LoginActivity.this, OfficeMainActivity.class));
+                //门禁类别id  2，会议门禁  1，普通门禁=办公室门禁， 3，宿舍门禁
+
+                switch (SpData.getLoginType()){
+                    case "1":
+                        startActivity(new Intent(LoginActivity.this, OfficeMainActivity.class));
+                        break;
+                    case "2":
+                        startActivity(new Intent(LoginActivity.this, AppointmentMainActivity.class));
+                        break;
+                    case "3":
+//                        startActivity(new Intent(LoginActivity.this, OfficeMainActivity.class));
+                        break;
                 }
+
+//                if (type.equals(SpData.appointment)) {//点击类型是预约门禁
+//
+//                    startActivity(new Intent(LoginActivity.this, AppointmentMainActivity.class));
+//
+//                }else if (type.equals(SpData.OfficeType)){
+//
+//                    startActivity(new Intent(LoginActivity.this, OfficeMainActivity.class));
+//                }
 
             } else
                 Toast.makeText(LoginActivity.this, rsp.msg, Toast.LENGTH_SHORT).show();

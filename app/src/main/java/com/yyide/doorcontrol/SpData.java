@@ -29,11 +29,22 @@ public class SpData {
 
     public static String  ISCARDSHOW="ISCARDSHOW";
     public static String  SHOWIDENTY="SHOWIDENTY";
+
+    public static String  appointment="appointment";
+    public static String  OfficeType="OfficeType";
     public static String AppointmentHome = "AppointmentHome";
     public static String ReservationList = "ReservationList";//预约会议
-    public static String appointment="appointment";
-    public static String OfficeType="OfficeType";
 
+
+
+    public static String getLoginType() {
+        String type = null;
+
+        if (User()!=null){
+           type=User().data.scId;
+        }
+        return type;
+    }
     public static LoginRsp User() {
         return JSON.parseObject(SPUtils.getInstance().getString(LOGINDATA, ""), LoginRsp.class);
     }
