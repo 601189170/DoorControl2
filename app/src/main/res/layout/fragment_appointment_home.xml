@@ -8,10 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
-            android:id="@+id/tv_title_name"
+            android:id="@+id/tv_now_appointment_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
@@ -19,7 +19,7 @@
             android:text="1111" />
 
         <TextView
-            android:id="@+id/tv_meeting_time"
+            android:id="@+id/tv_now_appointment_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -61,64 +61,247 @@
         </LinearLayout>
 
 
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/ll_status2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            android:paddingLeft="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="下一场:" />
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_next_appointment_name"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:gravity="center"
+                    android:text="你好你好粘结剂阿基拉开讲啦聚隆科技阿拉蕾会计法龙卷风"
+                    android:textColor="@color/black3"
+                    android:textSize="25dp" />
+
+                <TextView
+                    android:id="@+id/tv_next_appointment_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="100dp"
+                    android:text="11:20—12:20"
+                    android:textColor="@color/black3" />
+
+                <TextView
+                    android:id="@+id/tv_next_appointment_organizer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="100dp"
+                    android:text="Berlin"
+                    android:textColor="@color/black3" />
 
 
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_status3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="200dp"
+        android:visibility="visible">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="下一场: " />
+                android:text="容纳人数:"
+                android:textColor="@color/black3"
+                android:textSize="24dp" />
 
             <TextView
-                android:id="@+id/tv_next_meeting_name"
+                android:id="@+id/tv_galleryful"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:gravity="center"
-                android:text="1111" />
-        </LinearLayout>
+                android:layout_marginLeft="20dp"
+                android:text=""
+                android:textColor="@color/black3"
+                android:textSize="24dp" />
 
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-
-
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="空闲时间 : " />
+                android:text="设备信息:"
+                android:textColor="@color/black3"
+                android:textSize="24dp" />
 
             <TextView
-                android:id="@+id/tv_free_time"
+                android:id="@+id/tv_device_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:gravity="center"
-                android:text="1111" />
+                android:layout_marginLeft="20dp"
+                android:text=""
+                android:textColor="@color/black3"
+                android:textSize="24dp" />
+
+
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="管 理 员:"
+                android:textColor="@color/black3"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/tv_administrator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text=""
+                android:textColor="@color/black3"
+                android:textSize="24dp" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
 
+    <LinearLayout
+        android:id="@+id/ll_status4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="今日无预约"
+
+            />
+
+    </LinearLayout>
 
 
-    <ImageView
-        android:id="@+id/img_open_door"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/ll_next_meeting_free_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="300dp"
+            android:layout_marginTop="500dp"
+            android:layout_marginBottom="30dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_next_meeting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="下一场: " />
+
+                <TextView
+                    android:id="@+id/tv_next_meeting_name_little"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:gravity="center"
+                    android:text="1111" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="空闲时间 : " />
+
+                <TextView
+                    android:id="@+id/tv_free_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:gravity="center"
+                    android:text="1111" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"/>
+        android:layout_marginLeft="800dp"
+        android:layout_marginTop="500dp">
+
+        <ImageView
+            android:id="@+id/img_open_door"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher" />
+
+
+    </FrameLayout>
 
 
 </FrameLayout>

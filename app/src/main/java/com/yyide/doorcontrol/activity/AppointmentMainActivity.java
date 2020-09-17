@@ -92,7 +92,6 @@ public class AppointmentMainActivity extends BaseActivity {
         activeEngine(null);  //激活引擎
 
 
-
         indexAdapter = new RecyleviewIndexAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
