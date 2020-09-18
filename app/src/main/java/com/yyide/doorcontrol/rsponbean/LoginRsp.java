@@ -37,6 +37,7 @@ public class LoginRsp {
         public String scName;
         public String roomId;
         public String classSignId;
+
         public List<String> list=new ArrayList<>();
     }
 }
