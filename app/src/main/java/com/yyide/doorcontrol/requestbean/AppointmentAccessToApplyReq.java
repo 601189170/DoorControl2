@@ -5,7 +5,7 @@ import com.yyide.doorcontrol.rsponbean.AppointmentAccessToApplyRsp;
 
 public class AppointmentAccessToApplyReq extends BaseBeanReq<AppointmentAccessToApplyRsp> {
 
-    public String classSinId;
+    public String classesSinId;
 
     @Override
     public String myAddr() {

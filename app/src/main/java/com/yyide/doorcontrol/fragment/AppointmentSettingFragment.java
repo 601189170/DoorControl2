@@ -144,7 +144,7 @@ public class AppointmentSettingFragment extends BaseFragment {
 
     void getData() {
         AppointmentAccessToApplyReq req=new AppointmentAccessToApplyReq();
-        req.classSinId="0088b80a5383443fadefd5b6159819bb";
+        req.classesSinId="0088b80a5383443fadefd5b6159819bb";
         MyApp.getInstance().requestData130(this, req, new dateListener(), new updateError());//一德公司管理系统请求跟新
     }
 
@@ -152,13 +152,12 @@ public class AppointmentSettingFragment extends BaseFragment {
         @Override
         public void onResponse(final AppointmentAccessToApplyRsp rsp) {
             Log.e("TAG","预约门禁申请"+ JSON.toJSONString(rsp));
-//            if (rsp.status == BaseConstant.REQUEST_SUCCES) {
-//
-//            }
+            if (rsp.status == BaseConstant.REQUEST_SUCCES||rsp.status==BaseConstant.REQUEST_SUCCES2) {
+
+            }
         }
     }
     class updateError implements Response.ErrorListener {
-
         @Override
         public void onErrorResponse(VolleyError volleyError) {
             Toast.makeText(activity, "请求异常", Toast.LENGTH_SHORT).show();
