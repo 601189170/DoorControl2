@@ -1,5 +1,6 @@
 package com.yyide.doorcontrol.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -24,6 +25,7 @@ import com.yyide.doorcontrol.R;
 import com.yyide.doorcontrol.SpData;
 import com.yyide.doorcontrol.base.BaseActivity;
 import com.yyide.doorcontrol.base.BaseConstant;
+import com.yyide.doorcontrol.identy.IdentityEquipmentAppointmentActivity;
 import com.yyide.doorcontrol.utils.Tool;
 
 import java.io.UnsupportedEncodingException;
@@ -152,7 +154,11 @@ public class EquipmentUpgradingActivity  extends BaseActivity {
                 Tool.closeKeybord(this);
                 if (TextUtils.isEmpty(edit.getText())) {
                     Toast.makeText(EquipmentUpgradingActivity.this, "请输入内容", Toast.LENGTH_SHORT).show();
-                } else
+                } else{
+                    Intent intent = new Intent(EquipmentUpgradingActivity.this, IdentityEquipmentAppointmentActivity.class);
+                    intent.putExtra(BaseConstant.DOSHOMTHING, BaseConstant.EQE);
+                    startActivity(intent);
+                }
                    // PostData();
                 break;
         }

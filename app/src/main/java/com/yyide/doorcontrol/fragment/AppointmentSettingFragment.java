@@ -113,6 +113,7 @@ public class AppointmentSettingFragment extends BaseFragment {
 
                 intent = new Intent(getActivity(), RoomInformationActivity.class);
                 startActivity(intent);
+
                 break;
             case R.id.tv_equipment_upgrading:
                 intent = new Intent(getActivity(), EquipmentUpgradingActivity.class);

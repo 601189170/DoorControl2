@@ -142,6 +142,10 @@
         <activity
             android:name=".activity.EquipmentUpgradingActivity"
             android:screenOrientation="landscape" />
+        <!--设备报修验证-->
+        <activity android:name=".identy.IdentityEquipmentAppointmentActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/NoTitleDialog2"/>
 
         <activity android:name=".activity.doorControlActivity">
             <!--<intent-filter>-->

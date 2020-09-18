@@ -1,5 +1,8 @@
 package com.yyide.doorcontrol.rsponbean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Hao on 2017/3/11.
  */
@@ -33,5 +36,6 @@ public class LoginRsp {
         public String scId;
         public String scName;
         public String roomId;
+        public List<String> list=new ArrayList<>();
     }
 }

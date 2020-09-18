@@ -83,8 +83,7 @@ public class BaseConstant {
     public static final int QUALITY = 101;
     /*学生空间,学生权限*/
     public static final int USERCENTER = 102;
-    /*班级德育,学生权限*/
-    public static final int MORAL = 103;
+    public static final int  EQE= 103;
     /*设置,学生权限*/
     public static final int SETTING = 104;
     //素质评价————教师点评
