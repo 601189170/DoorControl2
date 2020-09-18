@@ -24,7 +24,7 @@ public class BaseConstant {
     public static int REQUEST_SUCCES2 = 200;
 
     /*刷卡器接口*/
-    public static String SPORT = "/dev/ttyS1";
+    public static String SPORT = "/dev/ttyS3";
 
 
     public static String SPORT2 = "/dev/ttyS4";
@@ -163,6 +163,7 @@ public class BaseConstant {
 
 
     public static String Command="COMMAND";
+    public static final int Door=665;
 
 
 }

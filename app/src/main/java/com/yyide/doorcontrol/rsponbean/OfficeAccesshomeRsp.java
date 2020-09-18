@@ -7,4 +7,27 @@ package com.yyide.doorcontrol.rsponbean;
 public class OfficeAccesshomeRsp {
 
 
+    /**
+     * status : 200
+     * msg : 操作成功
+     * data : {"roomNumber":"200","name":"巨大会议室"}
+     */
+
+    public int status;
+    public String msg;
+    public DataBean data;
+
+
+
+    public static class DataBean {
+        /**
+         * roomNumber : 200
+         * name : 巨大会议室
+         */
+
+        public String roomNumber;
+        public String name;
+
+   
+    }
 }

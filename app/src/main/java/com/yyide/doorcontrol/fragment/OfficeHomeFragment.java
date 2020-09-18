@@ -17,9 +17,7 @@ import com.yyide.doorcontrol.SpData;
 import com.yyide.doorcontrol.base.BaseConstant;
 import com.yyide.doorcontrol.base.BaseFragment;
 import com.yyide.doorcontrol.identy.DoorCheackActivity;
-import com.yyide.doorcontrol.requestbean.AccessToApplyReq;
 import com.yyide.doorcontrol.requestbean.OfficeAccesshomeReq;
-import com.yyide.doorcontrol.rsponbean.GetLastVersionRsp;
 import com.yyide.doorcontrol.rsponbean.OfficeAccesshomeRsp;
 
 import butterknife.BindView;
@@ -36,6 +34,8 @@ public class OfficeHomeFragment extends BaseFragment {
     Unbinder unbinder;
     @BindView(R.id.door)
     TextView door;
+    @BindView(R.id.room)
+    TextView room;
 
 
     @Override
@@ -59,8 +59,7 @@ public class OfficeHomeFragment extends BaseFragment {
     void getData() {
 
         OfficeAccesshomeReq req = new OfficeAccesshomeReq();
-        req.roomId= SpData.User().data.roomId;
-
+        req.roomId = SpData.User().data.roomId;
         MyApp.getInstance().requestDataBend(this, req, new dateListener(), new error());
     }
 
@@ -68,11 +67,12 @@ public class OfficeHomeFragment extends BaseFragment {
         @Override
         public void onResponse(final OfficeAccesshomeRsp rsp) {
 
-//            if (rsp.status == BaseConstant.REQUEST_SUCCES) {
-//
-//            }
+            if (rsp.status == BaseConstant.REQUEST_SUCCES2) {
+                room.setText(rsp.data.name);
+            }
         }
     }
+
     class error implements Response.ErrorListener {
 
         @Override
@@ -81,6 +81,7 @@ public class OfficeHomeFragment extends BaseFragment {
 
         }
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -90,7 +91,9 @@ public class OfficeHomeFragment extends BaseFragment {
 
     @OnClick(R.id.door)
     public void onViewClicked() {
-
-        startActivity(new Intent(activity, DoorCheackActivity.class));
+        Intent intent=new Intent();
+        intent.setClass(activity,DoorCheackActivity.class);
+        intent.putExtra(BaseConstant.DOSHOMTHING, BaseConstant.Door);
+        startActivity(intent);
     }
 }

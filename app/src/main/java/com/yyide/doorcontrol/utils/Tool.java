@@ -3,6 +3,7 @@ package com.yyide.doorcontrol.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.os.Environment;
@@ -11,10 +12,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -28,7 +31,7 @@ import java.util.Locale;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import android.util.Base64;
 public class Tool {
 	/**
 	 * 十进制数据格式字节数组转换成十六进制格式字符串
@@ -63,6 +66,20 @@ String uniqueId = uuid.toString();
 return uniqueId;
 
  }
+
+
+	public static Bitmap stringtoBitmap(String string) {
+		//将字符串转换成Bitmap类型
+		Bitmap bitmap = null;
+		try {
+			byte[] bitmapArray;
+			bitmapArray = Base64.decode(string, Base64.DEFAULT);
+			bitmap = BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.length);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bitmap;
+	}
 	/**
 	 * 十六进制字符串数据格式 转字节组十进制
 	 * @param hexString

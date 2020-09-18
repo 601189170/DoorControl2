@@ -43,6 +43,7 @@ import com.yyide.doorcontrol.hongruan.faceserver.FaceServer;
 import com.yyide.doorcontrol.requestbean.AccessToApplyReq;
 import com.yyide.doorcontrol.requestbean.GetLastVersionReq;
 import com.yyide.doorcontrol.rsponbean.GetLastVersionRsp;
+import com.yyide.doorcontrol.rsponbean.ToApplyRsp;
 import com.yyide.doorcontrol.utils.LoadingTools;
 
 import java.io.File;
@@ -130,17 +131,16 @@ public class OfficeMenuFragment extends BaseFragment {
     void getData() {
         pd.show();
         AccessToApplyReq req = new AccessToApplyReq();
-        req.classesSinId=SpData.User().data.signId;
-
-        MyApp.getInstance().requestDataBend(this, req, new dateListener(), new updateError());//一德公司管理系统请求跟新
+        req.classesSinId=SpData.User().data.classSignId;
+        MyApp.getInstance().requestData(this, req, new dateListener(), new updateError());
     }
 
-    class dateListener implements Response.Listener<GetLastVersionRsp> {
+    class dateListener implements Response.Listener<ToApplyRsp> {
         @Override
-        public void onResponse(final GetLastVersionRsp rsp) {
+        public void onResponse(final ToApplyRsp rsp) {
             pd.dismiss();
-            if (rsp.status == BaseConstant.REQUEST_SUCCES) {
-
+            if (rsp.status == BaseConstant.REQUEST_SUCCES2) {
+                new EvCodeDiallog(activity,rsp.data).show();
             }
         }
     }

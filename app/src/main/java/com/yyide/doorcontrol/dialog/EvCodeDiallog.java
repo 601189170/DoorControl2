@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.yyide.doorcontrol.R;
 import com.yyide.doorcontrol.utils.GlideUtil;
+import com.yyide.doorcontrol.utils.Tool;
 
 
 /**
@@ -39,7 +40,10 @@ public class EvCodeDiallog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.evcode_layout);
         img=findViewById(R.id.img);
-        GlideUtil.loadImage(context, str, img);
+//        GlideUtil.loadImage(context, str, img);
+
+        img.setImageBitmap(Tool.stringtoBitmap(str));
+
 
 
     }

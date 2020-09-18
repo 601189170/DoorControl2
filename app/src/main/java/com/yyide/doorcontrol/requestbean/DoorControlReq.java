@@ -14,16 +14,16 @@ public class DoorControlReq extends BaseBeanReq<DoorControlRsp> {
 
 
     public int officeId;
-    public String classesId;
-    public String accounts;
-    public String password;
-    public String temporaryPassword;
-    public String roomId;
+    public String temporaryPassword="";
+    public String roomId="";
+    public String cardNo="";
+    public String userId="";
 
 
     @Override
     public String myAddr() {
-        return "/api/officeAccess/doorControl";
+        return "/java-door/api/officeAccess/doorControl";
+//        return "/api/officeAccess/doorControl";
     }
 
     @Override

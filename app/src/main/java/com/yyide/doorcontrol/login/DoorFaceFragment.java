@@ -41,9 +41,12 @@ import com.arcsoft.face.GenderInfo;
 import com.arcsoft.face.LivenessInfo;
 import com.arcsoft.face.VersionInfo;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.yyide.doorcontrol.MyApp;
 import com.yyide.doorcontrol.R;
 import com.yyide.doorcontrol.SpData;
+import com.yyide.doorcontrol.base.BaseConstant;
 import com.yyide.doorcontrol.base.BaseFragment;
 import com.yyide.doorcontrol.hongruan.faceserver.CompareResult;
 import com.yyide.doorcontrol.hongruan.faceserver.FaceServer;
@@ -61,6 +64,9 @@ import com.yyide.doorcontrol.hongruan.util.face.RequestFeatureStatus;
 import com.yyide.doorcontrol.hongruan.util.face.RequestLivenessStatus;
 import com.yyide.doorcontrol.hongruan.widget.FaceRectView;
 import com.yyide.doorcontrol.hongruan.widget.FaceSearchResultAdapter;
+import com.yyide.doorcontrol.observer.IdManager;
+import com.yyide.doorcontrol.requestbean.DoorControlReq;
+import com.yyide.doorcontrol.rsponbean.DoorControlRsp;
 import com.yyide.doorcontrol.utils.LoadingTools;
 
 
@@ -212,7 +218,7 @@ public class DoorFaceFragment extends BaseFragment implements  ViewTreeObserver.
         View view = inflater.inflate(R.layout.activity_registerface, container, false);
          ButterKnife.bind(this, view);
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
+        pd = new LoadingTools().pd(activity);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WindowManager.LayoutParams attributes = getActivity().getWindow().getAttributes();
             attributes.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
@@ -229,6 +235,10 @@ public class DoorFaceFragment extends BaseFragment implements  ViewTreeObserver.
         }else {
             FaceServer.getInstance().unInit();
             FaceServer.getInstance().init(getActivity());
+        }
+
+        if (AppUtils.isAppDebug()){
+            Identity("");
         }
 //        mDbController = DbController.getInstance(RegisterAndRecognizeActivity.this);
         initView();
@@ -990,52 +1000,41 @@ public class DoorFaceFragment extends BaseFragment implements  ViewTreeObserver.
 
 
 
-    void Identity(String cardNo) {
-        pd.show();
-        Log.e(TAG, "Identity: "+cardNo );
-//        TeacherRoleIdentityVerificateReq req = new TeacherRoleIdentityVerificateReq();
-//        req.officeId = SpData.User().officeId;
-//        req.classesId = SpData.User().classesId;
-////        req.cardNo = cardNo;
-//        req.userId = cardNo;
-//        MyApp.getInstance().requestData(this, req, new signListenr(), new error());
-    }
-//    void Identity(String cardNo) {
-//        pd.show();
-//        TeacherIdentityVerificateReq req = new TeacherIdentityVerificateReq();
-//        req.officeId = SpData.User().officeId;
-//        req.cardNo = cardNo;
-//        MyApp.getInstance().requestData(this, req, new signListenr(), new error());
-//    }
+    void Identity(String userId) {
+        if (!activity.isDestroyed())
+            pd.show();
+        DoorControlReq req = new DoorControlReq();
+        req.officeId = SpData.User().data.officeId;
+        req.roomId = SpData.User().data.roomId;
+//        req.userId = "a1b585eb13fd4d97b992934ca8d78463";
+        req.userId = userId;
 
-//    class signListenr implements Response.Listener<TeacherRoleIdentityVerificateRsp> {
-//
-//        @Override
-//        public void onResponse(final TeacherRoleIdentityVerificateRsp rsp) {
-//            if (!activity.isDestroyed())
-//                pd.dismiss();
-//            if (camera != null) {
-//                camera.setFaceEnable(true);
-//            }
-//            if (rsp.status == BaseConstant.REQUEST_SUCCES) {
-//                IdManager.getInstance().notifyObserver(rsp.data.id);
-//            } else
-//                ToastUtils.showShort(rsp.info);
-//        }
-//    }
-//
-//    class error implements Response.ErrorListener {
-//
-//        @Override
-//        public void onErrorResponse(VolleyError volleyError) {
-//            if (camera != null) {
-//                camera.setFaceEnable(false);
-//            }
-//            if (!activity.isDestroyed())
-//                pd.dismiss();
-//            ToastUtils.showShort("请求失败，请重试");
-//        }
-//    }
+        MyApp.getInstance().requestData(this, req, new signListenr(), new error());
+    }
+
+    class signListenr implements Response.Listener<DoorControlRsp> {
+
+        @Override
+        public void onResponse(final DoorControlRsp rsp) {
+            if (!activity.isDestroyed())
+                pd.dismiss();
+            if (rsp.status == BaseConstant.REQUEST_SUCCES2) {
+                        IdManager.getInstance().notifyObserver("");
+            } else
+                ToastUtils.showShort(rsp.msg);
+        }
+    }
+
+    class error implements Response.ErrorListener {
+
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
+            if (!activity.isDestroyed())
+                pd.dismiss();
+
+            ToastUtils.showShort("请求失败，请重试");
+        }
+    }
 
     @Override
     public void onResume() {

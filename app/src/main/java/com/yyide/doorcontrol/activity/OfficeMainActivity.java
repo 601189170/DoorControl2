@@ -263,7 +263,7 @@ public class OfficeMainActivity extends BaseActivity {
 
         SaveFaceUpdateReq req = new SaveFaceUpdateReq();
         req.officeId = SpData.User().data.officeId;
-//        req.officeId = 16955;
+//        req.officeId = 16932;
         req.updateDate = datetime;
         MyApp.getInstance().requestDataHRFace(this, req, new dbListener(), new dbError());
     }
@@ -273,7 +273,7 @@ public class OfficeMainActivity extends BaseActivity {
         public void onResponse(SaveFaceUpdateRsp rsp) {
             Log.e("人脸识别", JSON.toJSONString(rsp));
             Log.e("SaveFaceUpdateRsp",rsp.data.size()+"");
-            if (rsp.status == BaseConstant.REQUEST_SUCCES2) {
+            if (rsp.status == BaseConstant.REQUEST_SUCCES) {
 
                 if (rsp.data.size()==0){
                     byte[] aaa = {1, 1, 1, 1, 1, 1,};

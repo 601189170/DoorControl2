@@ -49,6 +49,7 @@
                 android:textSize="20dp" />
             <CheckedTextView
                 android:id="@+id/btn4"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="25dp"

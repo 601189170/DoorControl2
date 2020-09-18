@@ -24,6 +24,8 @@ import com.yyide.doorcontrol.network.OkHttpStack;
 import com.yyide.doorcontrol.observer.ObserverManager;
 import com.yyide.doorcontrol.requestbean.BaseBeanReq;
 import com.yyide.doorcontrol.utils.AuthcodeTwo;
+import com.yyide.doorcontrol.utils.CardUtils;
+import com.yyide.doorcontrol.utils.CardUtils55;
 import com.yyide.doorcontrol.utils.MyHashMap;
 
 
@@ -164,10 +166,14 @@ public class MyApp extends Application {
 
                         if (size > 0) {
 
-//                            String cardNo= String.valueOf((HexTolong.hexToLong(sb.toString())));
-//                            Log.e("TAG", "cardNo: "+cardNo );
-//                            if (!TextUtils.isEmpty(cardNo)&&!TextUtils.equals("0",cardNo))
-//                                cardHandler.post(new CardBroadcast(cardNo));
+                            String cardNo;
+                            if (BaseConstant.HRA) {
+                                cardNo = CardUtils55.getInstance().getCardNo(buffer, 0, size);
+                            } else {
+                                cardNo = CardUtils.getInstance().getCardNo(buffer, 0, size);
+                            }
+                            if (!TextUtils.isEmpty(cardNo))
+                                cardHandler.post(new CardBroadcast(cardNo));
 
 
 

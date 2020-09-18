@@ -16,8 +16,10 @@ import android.widget.TextView;
 import com.yyide.doorcontrol.R;
 import com.yyide.doorcontrol.base.BaseActivity;
 import com.yyide.doorcontrol.base.BaseConstant;
+import com.yyide.doorcontrol.brocast.Brocast;
 import com.yyide.doorcontrol.login.DoorCardFragment;
 import com.yyide.doorcontrol.login.DoorFaceFragment;
+import com.yyide.doorcontrol.login.PassWordFragment;
 import com.yyide.doorcontrol.observer.IdListener;
 import com.yyide.doorcontrol.observer.IdManager;
 
@@ -121,7 +123,7 @@ public class DoorCheackActivity extends BaseActivity implements IdListener {
                 break;
             case 2:
                 if (fAccount == null) {
-//                    fAccount = new SettingAccountFragment();
+                    fAccount = new PassWordFragment();
                     fAccount.setArguments(bundle);
                     ft.add(R.id.content, fAccount, String.valueOf(btn3.getId()));
                 } else
@@ -184,7 +186,8 @@ public class DoorCheackActivity extends BaseActivity implements IdListener {
     void doSomeThing(String id) {
         Intent intent;
         switch (toDoType) {
-            case BaseConstant.SETTING:
+            case BaseConstant.Door:
+                Brocast.open(this);
 //                intent = new Intent(this, SettingActivity.class);
 //                startActivity(intent);
 //                finish();

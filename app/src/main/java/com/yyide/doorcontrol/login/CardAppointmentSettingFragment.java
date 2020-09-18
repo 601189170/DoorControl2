@@ -13,7 +13,9 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.yyide.doorcontrol.MyApp;
 import com.yyide.doorcontrol.R;
 import com.yyide.doorcontrol.SpData;
+import com.yyide.doorcontrol.base.BaseConstant;
 import com.yyide.doorcontrol.base.BaseFragment;
+import com.yyide.doorcontrol.observer.IdManager;
 import com.yyide.doorcontrol.observer.ObserverListener;
 import com.yyide.doorcontrol.observer.ObserverManager;
 import com.yyide.doorcontrol.requestbean.DoorControlReq;
@@ -77,11 +79,10 @@ public class CardAppointmentSettingFragment extends BaseFragment implements Obse
         public void onResponse(final DoorControlRsp rsp) {
             if (!activity.isDestroyed())
                 pd.dismiss();
-
-//            if (rsp == BaseConstant.REQUEST_SUCCES) {
-//                        IdManager.getInstance().notifyObserver(rsp.data.id);
-//            } else
-//                ToastUtils.showShort(rsp.info);
+            if (rsp.status == BaseConstant.REQUEST_SUCCES2) {
+                        IdManager.getInstance().notifyObserver("");
+            } else
+                ToastUtils.showShort(rsp.msg);
         }
     }
 
