@@ -17,8 +17,8 @@ public class AccessToApplyReq extends BaseBeanReq<ToApplyRsp> {
 
     @Override
     public String myAddr() {
-//        return "/api/officeAccess/accessToApply";
-        return "/java-door/api/officeAccess/accessToApply";
+        return "/api/officeAccess/accessToApply";
+//        return "/java-door/api/officeAccess/accessToApply";
     }
 
     @Override

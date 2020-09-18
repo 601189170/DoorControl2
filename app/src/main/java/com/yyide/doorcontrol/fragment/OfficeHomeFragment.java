@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.yyide.doorcontrol.MyApp;
@@ -60,14 +62,15 @@ public class OfficeHomeFragment extends BaseFragment {
 
         OfficeAccesshomeReq req = new OfficeAccesshomeReq();
         req.roomId = SpData.User().data.roomId;
-        MyApp.getInstance().requestDataBend(this, req, new dateListener(), new error());
+        MyApp.getInstance().requestData(this, req, new dateListener(), new error());
     }
 
     class dateListener implements Response.Listener<OfficeAccesshomeRsp> {
         @Override
         public void onResponse(final OfficeAccesshomeRsp rsp) {
-
+            Log.e("TAG", "OfficeAccesshomeRsp"+ JSON.toJSONString(rsp));
             if (rsp.status == BaseConstant.REQUEST_SUCCES2) {
+
                 room.setText(rsp.data.name);
             }
         }

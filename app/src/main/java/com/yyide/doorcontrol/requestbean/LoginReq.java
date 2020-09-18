@@ -19,8 +19,8 @@ public class LoginReq extends BaseBeanReq<LoginRsp> {
 
     @Override
     public String myAddr() {
-        return "/java-door/api/reservation-door/doorLoginIn";
-//        return "/api/reservation-door/doorLoginIn";
+//        return "/java-door/api/reservation-door/doorLoginIn";
+        return "/api/reservation-door/doorLoginIn";
     }
 
     @Override

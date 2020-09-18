@@ -20,8 +20,8 @@ public class OfficeAccesshomeReq extends BaseBeanReq<OfficeAccesshomeRsp> {
 
     @Override
     public String myAddr() {
-//        return "/api/officeAccess/home";
-        return "/java-door//api/officeAccess/home";
+        return "/api/officeAccess/home";
+//        return "/java-door//api/officeAccess/home";
     }
 
     @Override

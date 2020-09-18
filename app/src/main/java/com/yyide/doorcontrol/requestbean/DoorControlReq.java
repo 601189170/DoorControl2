@@ -22,8 +22,8 @@ public class DoorControlReq extends BaseBeanReq<DoorControlRsp> {
 
     @Override
     public String myAddr() {
-        return "/java-door/api/officeAccess/doorControl";
-//        return "/api/officeAccess/doorControl";
+//        return "/java-door/api/officeAccess/doorControl";
+        return "/api/officeAccess/doorControl";
     }
 
     @Override

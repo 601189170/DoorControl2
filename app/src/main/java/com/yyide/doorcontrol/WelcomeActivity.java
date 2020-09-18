@@ -31,7 +31,7 @@ public class WelcomeActivity extends AppCompatActivity {
     /*序列号数据，用户信息，序列号、登录名、密码*/
     private String registerDataStr, loginDataStr, register, loginName, passWord;
 
-    public static String IpNum = "1111";
+    public static String IpNum = "1113";
 //    public static String IpNum = "1206";
 //    public static String IpNum = "1003";
 //    public static String IpNum = "45646465";
