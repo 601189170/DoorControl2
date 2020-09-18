@@ -105,6 +105,8 @@ public class EquipmentUpgradingActivity  extends BaseActivity {
                 if (s.length() <= 50) {
                     index.setText(s.length() + "/50");
                 }
+
+
                 if (s.length() > 0) {
                     tx.setVisibility(View.GONE);
                 } else {
