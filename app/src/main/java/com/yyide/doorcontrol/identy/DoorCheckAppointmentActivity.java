@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.yyide.doorcontrol.R;
 import com.yyide.doorcontrol.base.BaseActivity;
 import com.yyide.doorcontrol.base.BaseConstant;
+import com.yyide.doorcontrol.login.DoorAccountAppointmentFragment;
 import com.yyide.doorcontrol.login.DoorCardAppointmentFragment;
 import com.yyide.doorcontrol.login.DoorFaceAppointmentFragment;
 import com.yyide.doorcontrol.observer.IdListener;
@@ -51,7 +52,7 @@ public class DoorCheckAppointmentActivity  extends BaseActivity implements IdLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_door_cheack);
+        setContentView(R.layout.activity_door_cheack_appointment);
         ButterKnife.bind(this);
         toDoType = getIntent().getIntExtra(BaseConstant.DOSHOMTHING, -1);
         studentId = getIntent().getStringExtra(BaseConstant.STUDENTID);
@@ -121,7 +122,7 @@ public class DoorCheckAppointmentActivity  extends BaseActivity implements IdLis
                 break;
             case 2:
                 if (fAccount == null) {
-                 //   fAccount = new DoorAppointmentAccountFragment();
+                    fAccount = new DoorAccountAppointmentFragment();
                     fAccount.setArguments(bundle);
                     ft.add(R.id.content, fAccount, String.valueOf(btn3.getId()));
                 } else

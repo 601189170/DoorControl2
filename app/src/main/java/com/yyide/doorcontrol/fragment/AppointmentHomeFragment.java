@@ -85,7 +85,6 @@ public class AppointmentHomeFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_appointment_home, container, false);
         ButterKnife.bind(this, view);
 
-
         return view;
     }
 
