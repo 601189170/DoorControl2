@@ -97,6 +97,8 @@ public class OfficeMainActivity extends BaseActivity {
         activeEngine(null);  //激活引擎
 //        FaceServer.getInstance().init(this);
 
+        //
+
     }
     private boolean checkPermissions(String[] neededPermissions) {
         if (neededPermissions == null || neededPermissions.length == 0) {
