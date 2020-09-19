@@ -134,17 +134,15 @@ public class TodayAppointmentActivity extends BaseActivity {
         mu.setViewState(MultiStateView.VIEW_STATE_LOADING);
         GetTodayReservationListReq req = new GetTodayReservationListReq();
         req.officeId = SpData.User().data.officeId;
-        req.roomId = "";
+        req.roomId = SpData.User().data.roomId;
 
-        MyApp.getInstance().requestData130(this, req, new sListener(), new Error());
+        MyApp.getInstance().requestData(this, req, new sListener(), new Error());
     }
 
 
     class sListener implements Response.Listener<GetTodayReservationListRsp> {
-
         @Override
         public void onResponse(GetTodayReservationListRsp rsp) {
-
             if (rsp.status == BaseConstant.REQUEST_SUCCES) {
                 Log.e("TAG", "rererererere: " + JSON.toJSONString(rsp));
                 SPUtils.getInstance().put(SpData.ReservationList, JSON.toJSONString(rsp));

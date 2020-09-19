@@ -3,6 +3,7 @@ package com.yyide.doorcontrol.activity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -33,14 +34,15 @@ import com.yyide.doorcontrol.adapter.RecyleviewIndexAdapter;
 import com.yyide.doorcontrol.adapter.ViewPagerFragmentAdapter;
 import com.yyide.doorcontrol.base.BaseActivity;
 import com.yyide.doorcontrol.base.BaseConstant;
+import com.yyide.doorcontrol.brocast.Brocast;
 import com.yyide.doorcontrol.fragment.AppointmentHomeFragment;
-import com.yyide.doorcontrol.fragment.AppointmentSettingFragment;
+import com.yyide.doorcontrol.fragment.AppointmentMenuFragment;
 import com.yyide.doorcontrol.hongruan.common.Constants;
 import com.yyide.doorcontrol.hongruan.db.DbController;
 import com.yyide.doorcontrol.hongruan.db.PersonInfor;
+import com.yyide.doorcontrol.hongruan.faceserver.FaceServer;
 import com.yyide.doorcontrol.hongruan.util.ConfigUtil;
 import com.yyide.doorcontrol.requestbean.AppointmentHomePageInfoReq;
-import com.yyide.doorcontrol.requestbean.LoginReq;
 import com.yyide.doorcontrol.requestbean.SaveFaceUpdateReq;
 import com.yyide.doorcontrol.rsponbean.AppointmentHomePageInfoRsp;
 import com.yyide.doorcontrol.rsponbean.SaveFaceUpdateRsp;
@@ -48,7 +50,6 @@ import com.yyide.doorcontrol.utils.SDcarfile;
 import com.yyide.doorcontrol.utils.SpaceItemDecoration;
 
 import java.net.URLDecoder;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -79,18 +80,16 @@ public class AppointmentMainActivity extends BaseActivity {
     private static DbController mDbController;
     private PersonInfor personInfor1;//数据库模板
     public static boolean ispost = true;
+    SaveFaceUpdateRsp bean;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment_main);
         ButterKnife.bind(this);
-
+        activeEngine(null);  //激活引擎
         mDbController = DbController.getInstance(this);
         ConfigUtil.setFtOrient(this, FaceEngine.ASF_OP_0_HIGHER_EXT);//设置人脸框填充
-
-        activeEngine(null);  //激活引擎
-
 
         indexAdapter = new RecyleviewIndexAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -104,6 +103,7 @@ public class AppointmentMainActivity extends BaseActivity {
 
 
     }
+
     private boolean checkPermissions(String[] neededPermissions) {
         if (neededPermissions == null || neededPermissions.length == 0) {
             return true;
@@ -176,6 +176,7 @@ public class AppointmentMainActivity extends BaseActivity {
                     }
                 });
     }
+
     private void showToast(String s) {
         if (toast == null) {
             toast = Toast.makeText(this, s, Toast.LENGTH_SHORT);
@@ -187,12 +188,10 @@ public class AppointmentMainActivity extends BaseActivity {
     }
 
 
-
-
     void FindHomePage() {
         AppointmentHomePageInfoReq req = new AppointmentHomePageInfoReq();
         req.signId = SpData.User().data.signId;
-        MyApp.getInstance().requestData130(this, req, new courseListener2(), new courseError2());
+        MyApp.getInstance().requestData(this, req, new courseListener2(), new courseError2());
     }
 
 
@@ -211,7 +210,7 @@ public class AppointmentMainActivity extends BaseActivity {
     class courseError2 implements Response.ErrorListener {
         @Override
         public void onErrorResponse(VolleyError error) {
-            Log.e("TAG", "courseError2: " + error.getMessage().toString());
+            //   Log.e("TAG", "courseError2: " + error.getMessage().toString());
             FindHomePage();
         }
     }
@@ -231,7 +230,8 @@ public class AppointmentMainActivity extends BaseActivity {
         Fragment home = new AppointmentHomeFragment();
         home.setArguments(bundle);
         mFragmentList.add(home);
-        Fragment menu = new AppointmentSettingFragment();//班牌最后一页所有按钮
+        // Fragment menu = new AppointmentSettingFragment();//班牌最后一页所有按钮
+        Fragment menu = new AppointmentMenuFragment();
         mFragmentList.add(menu);
 
         ViewPagerFragmentAdapter pagerAdapter = new ViewPagerFragmentAdapter(fm, mFragmentList);
@@ -255,10 +255,54 @@ public class AppointmentMainActivity extends BaseActivity {
 
     }
 
+    /**
+     * @Author: Berlin
+     * @Date: 2018/11/11 14:32
+     * @Description:异步任务上传个人信息
+     */
+    public class MyAsyncTask extends AsyncTask<Integer, String, String> {
+        /**
+         * 这里的Integer参数对应AsyncTask中的第一个参数
+         * 这里的String返回值对应AsyncTask的第三个参数
+         * 该方法并不运行在UI线程当中，主要用于异步操作，所有在该方法中不能对UI当中的空间进行设置和修改
+         * 但是可以调用publishProgress方法触发onProgressUpdate对UI进行操作
+         */
+        @Override
+        protected String doInBackground(Integer... integers) {
+            Log.e("随手记开启线程", "xxxxxxexecute传入参数=" + integers[0]);
+            try {
+                //  publishProgress("过了两秒");
+//                getfacefeature();
+                DBFuction(bean);
+                // Thread.sleep(500);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return "doInBackground的返回";
+        }
+
+        /**
+         * 这里的String参数对应AsyncTask中的第三个参数（也就是接收doInBackground的返回值）
+         * 在doInBackground方法执行结束之后在运行，并且运行在UI线程当中 可以对UI空间进行设置
+         */
+        @Override
+        protected void onPostExecute(String result) {
+            //当任务执行完成是调用,在UI线程
+        }
+
+        //该方法运行在UI线程当中,并且运行在UI线程当中 可以对UI空间进行设置
+        @Override
+        protected void onPreExecute() {
+
+        }
+    }
+
 
     @Override
     protected void onResume() {
         super.onResume();
+        Brocast.start(this);
+        myAsyncTask = new MyAsyncTask();//开启异步任务
         getfacefeature();
     }
 
@@ -266,6 +310,7 @@ public class AppointmentMainActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
     public void getfacefeature() {
         ispost = false;
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -282,21 +327,6 @@ public class AppointmentMainActivity extends BaseActivity {
         Log.e("同步人脸的时间", "当前时间str:" + str + "/datetime：" + datetime);
     }
 
-    //字符串转时间戳
-    public static String getTime(String timeString) {
-        String timeStamp = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 hh:mm");
-        Date d;
-        try {
-            d = sdf.parse(timeString);
-            long l = d.getTime();
-            timeStamp = String.valueOf(l);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return timeStamp;
-    }
-
     public void getface(String datetime) { //人脸同步
         Log.e("同步人脸的时间", "datetime:" + datetime);
         SaveFaceUpdateReq req = new SaveFaceUpdateReq();
@@ -305,57 +335,100 @@ public class AppointmentMainActivity extends BaseActivity {
         MyApp.getInstance().requestDataHRFace(this, req, new dbListener(), new dbError());
     }
 
+    private MyAsyncTask myAsyncTask;
+
     class dbListener implements Response.Listener<SaveFaceUpdateRsp> {
         @Override
         public void onResponse(SaveFaceUpdateRsp rsp) {
-            Log.e("人脸识别", JSON.toJSONString(rsp));
-            Log.e("SaveFaceUpdateRsp",rsp.data.size()+"");
-            if (rsp.status == BaseConstant.REQUEST_SUCCES2) {
 
-                if (rsp.data.size()==0){
+            Log.e("人脸识别", JSON.toJSONString(rsp.data.size()) + "/数据：" + JSON.toJSONString(rsp));
+            if (rsp.status == BaseConstant.REQUEST_SUCCES) {
+                Log.e("人脸识别", JSON.toJSONString(rsp.data));
+                if (mDbController.searchAll().size() == 0) {
                     byte[] aaa = {1, 1, 1, 1, 1, 1,};
                     personInfor1 = new PersonInfor(null, "430981199403208315", aaa, "xp", "男", "1");
                     mDbController.update(personInfor1);//本地库 添加人脸信息 如果存在。进行update 无则添加
                 }
+
 //                URLDecoder.decode(str, "utf-8");  //还原encode
-                try {
-                    for (int i = 0; i < rsp.data.size(); i++) {
-                        String newfacetrue = rsp.data.get(i).facialFeatures.replace(" ", "+");
-                        byte[] featrue = Base64.decode(newfacetrue, 2);
-//                        Log.e("xupengper", "name:" + rsp.data.get(i).name + " /studentId:" + rsp.data.get(i).studentId + " /teacherId:" + rsp.data.get(i).teacherId +
-//                                " /delFlag:" + rsp.data.get(i).delFlag + "/photo:" + rsp.data.get(i).photo + "/size:" + rsp.data.size());
-                        if (rsp.data.get(i).delFlag == 0) { //判断是否是新增人脸
-                            if (rsp.data.get(i).teacherId == null || rsp.data.get(i).teacherId.equals("") || rsp.data.get(i).teacherId.equals("null")) {
-                                personInfor1 = new PersonInfor(null, rsp.data.get(i).studentId, featrue, URLDecoder.decode(rsp.data.get(i).name, "utf-8"), "男", "1");
-                                mDbController.update(personInfor1);//本地库 添加人脸信息 如果存在。进行update 无则添加
-                            } else {
-                                personInfor1 = new PersonInfor(null, rsp.data.get(i).teacherId, featrue, URLDecoder.decode(rsp.data.get(i).name, "utf-8"), "男", "0");
-                                mDbController.update(personInfor1);//本地库 添加人脸信息
-                            }
-                        } else if (rsp.data.get(i).delFlag == 1) { //判断解绑人脸
-                            if (rsp.data.get(i).teacherId == null || rsp.data.get(i).teacherId.equals("") || rsp.data.get(i).teacherId.equals("null")) {
-                                mDbController.delete(rsp.data.get(i).studentId); //删除老师id对应的人脸值
-                            } else {
-                                mDbController.delete(rsp.data.get(i).teacherId);//删除学生id对应的人脸值
-                            }
-                        }
-//                        FaceRegisterInfo info=new FaceRegisterInfo(featrue, URLDecoder.decode(rsp.data.get(i).name, "utf-8"),rsp.data.get(i).teacherId,Long.valueOf(i+123),"111");
-//                        FaceServer.getInstance().addfaceregis(info);//
-                    }
-                } catch (Exception e) {
-                    Log.e("compare", e.toString());
-                }
-                showDataList();
-                ispost = true;
+//                try {
+//                    for (int i = 0; i < rsp.data.size(); i++) {
+//                        String newfacetrue = rsp.data.get(i).facialFeatures.replace(" ", "+");
+//                        byte[] featrue = Base64.decode(newfacetrue, 2);
+////                        Log.e("xupengper", "name:" + rsp.data.get(i).name + " /studentId:" + rsp.data.get(i).studentId + " /teacherId:" + rsp.data.get(i).teacherId +
+////                                " /delFlag:" + rsp.data.get(i).delFlag + "/photo:" + rsp.data.get(i).photo + "/size:" + rsp.data.size());
+//                        if (rsp.data.get(i).delFlag == 0) { //判断是否是新增人脸
+//                            if (rsp.data.get(i).teacherId == null || rsp.data.get(i).teacherId.equals("") || rsp.data.get(i).teacherId.equals("null")) {
+//                                personInfor1 = new PersonInfor(null, rsp.data.get(i).studentId, featrue, URLDecoder.decode(rsp.data.get(i).name, "utf-8"), "男", "1");
+//                                mDbController.update(personInfor1);//本地库 添加人脸信息 如果存在。进行update 无则添加
+//                            } else {
+//                                personInfor1 = new PersonInfor(null, rsp.data.get(i).teacherId, featrue, URLDecoder.decode(rsp.data.get(i).name, "utf-8"), "男", "0");
+//                                mDbController.update(personInfor1);//本地库 添加人脸信息
+//                            }
+//                        } else if (rsp.data.get(i).delFlag == 1) { //判断解绑人脸
+//                            if (rsp.data.get(i).teacherId == null || rsp.data.get(i).teacherId.equals("") || rsp.data.get(i).teacherId.equals("null")) {
+//                                mDbController.delete(rsp.data.get(i).studentId); //删除老师id对应的人脸值
+//                            } else {
+//                                mDbController.delete(rsp.data.get(i).teacherId);//删除学生id对应的人脸值
+//                            }
+//                        }
+////                        FaceRegisterInfo info=new FaceRegisterInfo(featrue, URLDecoder.decode(rsp.data.get(i).name, "utf-8"),rsp.data.get(i).teacherId,Long.valueOf(i+123),"111");
+////                        FaceServer.getInstance().addfaceregis(info);//
+//                    }
+//                } catch (Exception e) {
+//                    Log.e("compare", e.toString());
+//                }
+//                showDataList();
+//                ispost = true;
+                bean = rsp;
+                myAsyncTask.execute(100);
 
             } else {
                 Log.e("compare", rsp.info + "");
                 ispost = true;
                 showToast(rsp.info);
             }
-//            pd.dismiss();
+
         }
     }
+
+    void DBFuction(SaveFaceUpdateRsp rsp) {
+        try {
+            for (int i = 0; i < rsp.data.size(); i++) {
+                String newfacetrue = rsp.data.get(i).facialFeatures.replace(" ", "+");
+                byte[] featrue = Base64.decode(newfacetrue, 2);
+                Log.e("xupengper", "请求接口获取的数据" + "name:" + rsp.data.get(i).name + " /studentId:" + rsp.data.get(i).studentId + " /teacherId:" + rsp.data.get(i).teacherId +
+                        " /delFlag:" + rsp.data.get(i).delFlag + "/photo:" + rsp.data.get(i).photo + "/size:" + rsp.data.size());
+                if (rsp.data.get(i).delFlag == 0) { //判断是否是新增人脸
+                    if (rsp.data.get(i).teacherId == null || rsp.data.get(i).teacherId.equals("") || rsp.data.get(i).teacherId.equals("null")) {
+                        personInfor1 = new PersonInfor(null, rsp.data.get(i).studentId, featrue, URLDecoder.decode(rsp.data.get(i).name, "utf-8"), "男", "1");
+                        mDbController.update(personInfor1);//本地库 添加人脸信息 如果存在。进行update 无则添加
+                    } else {
+                        personInfor1 = new PersonInfor(null, rsp.data.get(i).teacherId, featrue, URLDecoder.decode(rsp.data.get(i).name, "utf-8"), "男", "0");
+                        mDbController.update(personInfor1);//本地库 添加人脸信息
+                    }
+                } else if (rsp.data.get(i).delFlag == 1) { //判断解绑人脸
+                    if (rsp.data.get(i).teacherId == null || rsp.data.get(i).teacherId.equals("") || rsp.data.get(i).teacherId.equals("null")) {
+                        mDbController.delete(rsp.data.get(i).studentId); //删除老师id对应的人脸值
+                    } else {
+
+                        mDbController.delete(rsp.data.get(i).teacherId);//删除学生id对应的人脸值
+                    }
+                }
+//                        FaceRegisterInfo info=new FaceRegisterInfo(featrue, URLDecoder.decode(rsp.data.get(i).name, "utf-8"),rsp.data.get(i).teacherId,Long.valueOf(i+123),"111");
+//                        FaceServer.getInstance().addfaceregis(info);//
+            }
+            if (FaceServer.faceEngine == null) {
+                FaceServer.getInstance().init(AppointmentMainActivity.this);
+            }
+        } catch (Exception e) {
+            Log.e("compare", e.toString());
+        }
+       // pd.cancel();
+        showDataList();
+        ispost = true;
+    }
+
 
     private void showDataList() {
         StringBuilder sb = new StringBuilder();
@@ -368,7 +441,7 @@ public class AppointmentMainActivity extends BaseActivity {
                     .append("featrue:").append(personInfor.getFeatrue())
                     .append("time:").append(personInfor.getTime())
                     .append("\n");
-//            Log.i("xupengface",sb.toString());
+           Log.i("xupengface",sb.toString());
         }
     }
 

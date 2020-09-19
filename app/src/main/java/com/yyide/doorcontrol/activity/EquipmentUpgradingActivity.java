@@ -120,10 +120,9 @@ public class EquipmentUpgradingActivity  extends BaseActivity {
 
             }
         });
-   //     initData();
+
     }
     InputFilter inputFilter = new InputFilter() {
-
         Pattern pattern = Pattern.compile("[^a-zA-Z0-9\\u4E00-\\u9FA5_`~!@#$^&*()=|{}':;',\\\\[\\\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]");
 
         @Override
@@ -159,6 +158,7 @@ public class EquipmentUpgradingActivity  extends BaseActivity {
                 } else{
                     Intent intent = new Intent(EquipmentUpgradingActivity.this, IdentityEquipmentAppointmentActivity.class);
                     intent.putExtra(BaseConstant.DOSHOMTHING, BaseConstant.EQE);
+                    intent.putExtra("content",name);
                     startActivity(intent);
                 }
                    // PostData();

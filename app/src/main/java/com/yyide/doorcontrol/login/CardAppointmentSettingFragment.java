@@ -70,7 +70,7 @@ public class CardAppointmentSettingFragment extends BaseFragment implements Obse
 
         req.officeId = SpData.User().data.officeId;
         req.roomId = SpData.User().data.roomId;
-        MyApp.getInstance().requestData130(this, req, new signListenr(), new error());
+        MyApp.getInstance().requestData(this, req, new signListenr(), new error());
     }
 
     class signListenr implements Response.Listener<DoorControlRsp> {

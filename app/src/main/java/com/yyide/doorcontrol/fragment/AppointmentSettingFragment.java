@@ -25,6 +25,7 @@ import com.yyide.doorcontrol.activity.RoomInformationActivity;
 import com.yyide.doorcontrol.activity.TodayAppointmentActivity;
 import com.yyide.doorcontrol.base.BaseConstant;
 import com.yyide.doorcontrol.base.BaseFragment;
+import com.yyide.doorcontrol.dialog.EvCodeDiallog;
 import com.yyide.doorcontrol.hongruan.db.DbController;
 import com.yyide.doorcontrol.hongruan.faceserver.FaceServer;
 import com.yyide.doorcontrol.identy.AppointmentSettingCheckActivity;
@@ -101,7 +102,7 @@ public class AppointmentSettingFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.tv_access_control:
                 Toast.makeText(getActivity(), "申请门禁被点击", Toast.LENGTH_SHORT).show();
-              getData();
+                getData();
 
                 break;
             case R.id.tv_today_appointment:
@@ -110,7 +111,6 @@ public class AppointmentSettingFragment extends BaseFragment {
 
                 break;
             case R.id.tv_room_information:
-
                 intent = new Intent(getActivity(), RoomInformationActivity.class);
                 startActivity(intent);
 
@@ -120,14 +120,7 @@ public class AppointmentSettingFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.tv_switch_account:
-                ActivityUtils.finishAllActivities();
-                SPUtils.getInstance().remove(BaseConstant.LOGINNAME);
-                SPUtils.getInstance().remove(BaseConstant.PASSWORD);
-                SPUtils.getInstance().remove(SpData.LOGINDATA);
-                DbController.getInstance(activity).deleteTable();
-                FaceServer.getInstance().unInit();
-                FaceServer.getInstance().clearAllFaces(activity);
-                startActivity(new Intent(activity, LoginActivity.class));
+
 
                 break;
             case R.id.tv_update:
@@ -138,6 +131,7 @@ public class AppointmentSettingFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.tv_out_system:
+
                 break;
         }
     }
@@ -145,8 +139,8 @@ public class AppointmentSettingFragment extends BaseFragment {
 
     void getData() {
         AppointmentAccessToApplyReq req=new AppointmentAccessToApplyReq();
-        req.classesSinId="0088b80a5383443fadefd5b6159819bb";
-        MyApp.getInstance().requestData130(this, req, new dateListener(), new updateError());//一德公司管理系统请求跟新
+        req.classesSinId=SpData.User().data.classSignId;
+        MyApp.getInstance().requestData(this, req, new dateListener(), new updateError());//一德公司管理系统请求跟新
     }
 
     class dateListener implements Response.Listener<AppointmentAccessToApplyRsp> {
@@ -154,7 +148,7 @@ public class AppointmentSettingFragment extends BaseFragment {
         public void onResponse(final AppointmentAccessToApplyRsp rsp) {
             Log.e("TAG","预约门禁申请"+ JSON.toJSONString(rsp));
             if (rsp.status == BaseConstant.REQUEST_SUCCES||rsp.status==BaseConstant.REQUEST_SUCCES2) {
-
+                new EvCodeDiallog(activity,rsp.data).show();
             }
         }
     }

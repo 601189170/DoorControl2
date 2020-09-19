@@ -5,6 +5,8 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.hardware.Camera;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
@@ -43,7 +47,10 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.yyide.doorcontrol.MyApp;
 import com.yyide.doorcontrol.R;
 import com.yyide.doorcontrol.SpData;
+import com.yyide.doorcontrol.base.BaseConstant;
 import com.yyide.doorcontrol.base.BaseFragment;
+import com.yyide.doorcontrol.hongruan.db.DbController;
+import com.yyide.doorcontrol.hongruan.db.PersonInfor;
 import com.yyide.doorcontrol.hongruan.faceserver.CompareResult;
 import com.yyide.doorcontrol.hongruan.faceserver.FaceServer;
 import com.yyide.doorcontrol.hongruan.model.DrawInfo;
@@ -60,12 +67,15 @@ import com.yyide.doorcontrol.hongruan.util.face.RequestFeatureStatus;
 import com.yyide.doorcontrol.hongruan.util.face.RequestLivenessStatus;
 import com.yyide.doorcontrol.hongruan.widget.FaceRectView;
 import com.yyide.doorcontrol.hongruan.widget.FaceSearchResultAdapter;
-import com.yyide.doorcontrol.requestbean.AppointmentOpenDoorReq;
-import com.yyide.doorcontrol.requestbean.EquipmentCertificationCtoReq;
-import com.yyide.doorcontrol.rsponbean.AppointmentOpenDoorRsp;
-import com.yyide.doorcontrol.rsponbean.EquipmentCertificationCtoRsp;
+import com.yyide.doorcontrol.observer.IdManager;
+import com.yyide.doorcontrol.requestbean.DoorControlReq;
+import com.yyide.doorcontrol.rsponbean.DoorControlRsp;
+import com.yyide.doorcontrol.utils.GlideUtil;
+import com.yyide.doorcontrol.utils.L;
 import com.yyide.doorcontrol.utils.LoadingTools;
+import com.yyide.doorcontrol.utils.Tool;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -85,16 +95,17 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTreeObserver.OnGlobalLayoutListener {
+/**
+ * 预约门禁人脸开门R.layout.activity_registerface
+ */
+public class DoorFaceAppointmentFragment extends BaseFragment implements ViewTreeObserver.OnGlobalLayoutListener {
 
-    //    @BindView(R.id.camera)
-
+    MediaPlayer mp;
 
     SweetAlertDialog pd;
-
     @BindView(R.id.close)
     Button close;
-    @BindView(R.id.single_camera_texture_preview)
+    // @BindView(R.id.single_camera_texture_preview)
     TextureView previewView;
     @BindView(R.id.single_camera_face_rect_view)
     FaceRectView faceRectView;
@@ -104,6 +115,8 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
     RecyclerView recyclerShowFaceInfo;
     @BindView(R.id.listview_arcface)
     ListView listviewArcface;
+    @BindView(R.id.stateface)
+    TextView stateface;
 
 
     private static final String TAG = "RegisterAndRecognize";
@@ -122,8 +135,6 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
      * 出错重试最大次数
      */
     private static final int MAX_RETRY_TIME = 3;
-    @BindView(R.id.stateface)
-    TextView stateface;
 
     private CameraHelper cameraHelper;
     private DrawHelper drawHelper;
@@ -131,7 +142,7 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
     /**
      * 优先打开的摄像头，本界面主要用于单目RGB摄像头设备，因此默认打开前置
      */
-    private Integer rgbCameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
+    private Integer rgbCameraID = Camera.CameraInfo.CAMERA_FACING_BACK;
 
     /**
      * VIDEO模式人脸检测引擎，用于预览帧人脸追踪
@@ -151,7 +162,7 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
     private int frInitCode = -1;
     private int flInitCode = -1;
     private FaceHelper faceHelper;
-    private List<CompareResult> compareResultList; //这是人脸比对成功的人 list 信息。每个compare都是一个人的信息
+    private List<CompareResult> compareResultList;
     private FaceSearchResultAdapter adapter;
     /**
      * 活体检测的开关
@@ -178,14 +189,13 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
     private ConcurrentHashMap<Integer, Integer> livenessErrorRetryMap = new ConcurrentHashMap<>();
     private CompositeDisposable getFeatureDelayedDisposables = new CompositeDisposable();
     private CompositeDisposable delayFaceTaskCompositeDisposable = new CompositeDisposable();
-    /**
-     * 相机预览显示的控件，可为SurfaceView或TextureView
-     */
+/**
+ * 相机预览显示的控件，可为SurfaceView或TextureView
+ */
 
     /**
      * 绘制人脸框的控件
      */
-
 
     private static final int ACTION_REQUEST_PERMISSIONS = 0x001;
     private static final float SIMILAR_THRESHOLD = SpData.facefortrue;
@@ -201,45 +211,68 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
     private String name, id, type;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_registerface, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_registerfaces, container, false);
         ButterKnife.bind(this, view);
-        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        Log.e("dialog弹窗", "开始打开弹窗dialog+AttendanceFaceFragment+onCreateView");
 
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        pd = new LoadingTools().pd(activity);
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WindowManager.LayoutParams attributes = getActivity().getWindow().getAttributes();
-            attributes.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+            attributes.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
             getActivity().getWindow().setAttributes(attributes);
         }
+        //本地人脸库初始化
+
+        if (FaceServer.faceEngine == null) {
+            FaceServer.getInstance().init(getActivity());
+        }
+        StringBuilder sb = new StringBuilder();
+        List<PersonInfor> personInfors = DbController.getInstance(getActivity()).searchAll();
+        for (PersonInfor personInfor : personInfors) {
+            sb.append("id:").append(personInfor.getId())
+                    .append("perNo:").append(personInfor.getPerNo())
+                    .append("name:").append(personInfor.getName())
+                    .append("sex:").append(personInfor.getSex())
+                    .append("featrue:").append(personInfor.getFeatrue())
+                    .append("time:").append(personInfor.getTime())
+                    .append("\n");
+           Log.e("xupengface00000",sb.toString());
+
+        }
+
+        listviewArcface.setVisibility(View.GONE);
+
+        //  listviewArcface.setAdapter(myadapter);
         name = "name";
         id = "id";
         type = "3";  //1为 student录入  2为teacher 录入
         // Activity启动后就锁定为启动时的方向
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-        //本地人脸库初始化
-        if (FaceServer.faceEngine==null){
-            FaceServer.getInstance().init(getActivity());
-        }else {
-            FaceServer.getInstance().unInit();
-            FaceServer.getInstance().init(getActivity());
-        }
-//        mDbController = DbController.getInstance(RegisterAndRecognizeActivity.this);
-        initView();
-        return view;
-    }
 
+        initView();
+        Log.e("dialog弹窗", "开始打开弹窗dialog+AttendanceFaceFragment+2222222+onViewCreated");
+    }
 
     private void initView() {
         //在布局结束后才做初始化操作
+        previewView = getView().findViewById(R.id.single_camera_texture_preview);
         previewView.getViewTreeObserver().addOnGlobalLayoutListener(this);
-        switchLivenessDetect.setChecked(false);
-        switchLivenessDetect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                livenessDetect = isChecked;
-            }
-        });
+        switchLivenessDetect.setChecked(false);//活体检测  开true 关闭 false
+//        switchLivenessDetect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                livenessDetect = isChecked;
+//            }
+//        });
+
         compareResultList = new ArrayList<>();
         adapter = new FaceSearchResultAdapter(compareResultList, getContext());
         recyclerShowFaceInfo.setAdapter(adapter);
@@ -247,6 +280,7 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
         int spanCount = (int) (dm.widthPixels / (getResources().getDisplayMetrics().density * 100 + 0.5f));
         recyclerShowFaceInfo.setLayoutManager(new GridLayoutManager(getContext(), spanCount));
         recyclerShowFaceInfo.setItemAnimator(new DefaultItemAnimator());
+
     }
 
     /**
@@ -256,7 +290,6 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
         ftEngine = new FaceEngine();
         ftInitCode = ftEngine.init(getActivity(), FaceEngine.ASF_DETECT_MODE_VIDEO, ConfigUtil.getFtOrient(getActivity()),
                 16, MAX_DETECT_NUM, FaceEngine.ASF_FACE_DETECT);
-
         frEngine = new FaceEngine();
         frInitCode = frEngine.init(getActivity(), FaceEngine.ASF_DETECT_MODE_IMAGE, FaceEngine.ASF_OP_0_ONLY,
                 16, MAX_DETECT_NUM, FaceEngine.ASF_FACE_RECOGNITION);
@@ -265,31 +298,28 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
         flInitCode = flEngine.init(getActivity(), FaceEngine.ASF_DETECT_MODE_IMAGE, FaceEngine.ASF_OP_0_ONLY,
                 16, MAX_DETECT_NUM, FaceEngine.ASF_LIVENESS);
 
-
         VersionInfo versionInfo = new VersionInfo();
         ftEngine.getVersion(versionInfo);
         Log.i(TAG, "initEngine:  init: " + ftInitCode + "  version:" + versionInfo);
 
         if (ftInitCode != ErrorInfo.MOK) {
             String error = getString(R.string.specific_engine_init_failed, "ftEngine", ftInitCode);
-            Log.i(TAG, "initEngine: " + error);
-            if (ftInitCode!=4){
+            Log.i(TAG, "initEngine:+ftInitCode " + error);
+            if (ftInitCode != 4) {
                 Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
             }
-
         }
         if (frInitCode != ErrorInfo.MOK) {
             String error = getString(R.string.specific_engine_init_failed, "frEngine", frInitCode);
-            Log.i(TAG, "initEngine: " + error);
-            if (frInitCode!=4){
+            Log.i(TAG, "initEngine:+frInitCode " + error);
+            if (frInitCode != 4) {
                 Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
             }
-
         }
         if (flInitCode != ErrorInfo.MOK) {
             String error = getString(R.string.specific_engine_init_failed, "flEngine", flInitCode);
-            Log.i(TAG, "initEngine: " + error);
-            if (flInitCode!=4){
+            Log.i(TAG, "initEngine: +flInitCode" + error);
+            if (flInitCode != 4) {
                 Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
             }
         }
@@ -352,17 +382,8 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
                 //FR成功
                 if (faceFeature != null) {
 
-                    Log.i(TAG, "onPreview: fr end = " + System.currentTimeMillis() + " trackId = " + requestId + "feature" + faceFeature.getFeatureData().toString());
+                    // Log.i(TAG, "onPreview: fr end = " + System.currentTimeMillis() + " trackId = " + requestId + "feature" + faceFeature.getFeatureData().toString());
                     Integer liveness = livenessMap.get(requestId);
-                    //不做活体检测的情况，直接搜索
-//                    if (type.equals("1") || type.equals("2")) {
-//
-//                    } else {
-//                        searchFace(faceFeature, requestId);
-//                    }
-                    if (!livenessDetect) {
-                        searchFace(faceFeature, requestId);
-                    }
 
                     //活体检测通过，搜索特征
                     if (liveness != null && liveness == LivenessInfo.ALIVE) {
@@ -450,10 +471,7 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
                     }
                 }
             }
-
-
         };
-
 
         CameraListener cameraListener = new CameraListener() {
             @Override
@@ -492,11 +510,11 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
                 if (faceRectView != null) {
                     faceRectView.clearFaceInfo();
                 }
-                List<FacePreviewInfo> facePreviewInfoList = faceHelper.onPreviewFrame(nv21);
+                List<FacePreviewInfo> facePreviewInfoList = faceHelper.onPreviewFrameduo(nv21);
                 if (facePreviewInfoList != null && faceRectView != null && drawHelper != null) {
                     drawPreviewInfo(facePreviewInfoList);
                 }
-//                registerFace(nv21, facePreviewInfoList); //录入人脸信息
+//              registerFace(nv21, facePreviewInfoList); //录入人脸信息
                 clearLeftFace(facePreviewInfoList);
 
                 if (facePreviewInfoList != null && facePreviewInfoList.size() > 0 && previewSize != null) {
@@ -529,12 +547,12 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
 
             @Override
             public void onCameraClosed() {
-                Log.i(TAG, "onCameraClosed: ");
+                Log.e(TAG, "onCameraClosed: ");
             }
 
             @Override
             public void onCameraError(Exception e) {
-                Log.i(TAG, "onCameraError: " + e.getMessage());
+                Log.e(TAG, "onCameraError: " + e.getMessage());
             }
 
             @Override
@@ -542,7 +560,7 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
                 if (drawHelper != null) {
                     drawHelper.setCameraDisplayOrientation(displayOrientation);
                 }
-                Log.i(TAG, "onCameraConfigurationChanged: " + cameraID + "  " + displayOrientation);
+                Log.e(TAG, "onCameraConfigurationChanged: " + cameraID + "  " + displayOrientation);
             }
         };
 
@@ -584,7 +602,7 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
                         @Override
                         public void onNext(Boolean success) {
                             String result = success ? name + "录取成功" : name + "录取成功";
-                            Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                            //  Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                             registerStatus = REGISTER_STATUS_DONE;
                             if (type.equals("1") || type.equals("2")) {
                                 getActivity().finish();//录取成功后 关闭当前识别页。
@@ -654,6 +672,7 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
                 isAllGranted &= (grantResult == PackageManager.PERMISSION_GRANTED);
             }
             if (isAllGranted) {
+                Log.e("fortime", "AttendanceFaceFragment+onRequestPermissionsResult拿到权限");
                 initEngine();
                 initCamera();
             } else {
@@ -707,17 +726,18 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
 
     }
 
-    int jiude = 0;
+    ArrayList<String> bendiface = new ArrayList();
+    int lastSize;
+    int iimub = 0;
 
-    int iimub=0;
     private void searchFace(final FaceFeature frFace, final Integer requestId) {
         Observable
                 .create(new ObservableOnSubscribe<CompareResult>() {
                     @Override
                     public void subscribe(ObservableEmitter<CompareResult> emitter) {
                         Log.i(TAG, "subscribe: fr search start = " + System.currentTimeMillis() + " trackId = " + requestId);
-                        CompareResult compareResult = FaceServer.getInstance().getTopOfFaceLib(frFace);  //获取循环比对结果     这句是人脸比对的结果。
-//                        Log.i(TAG, "subscribe: fr search end = " + System.currentTimeMillis() + " trackId = " + requestId);
+                        CompareResult compareResult = FaceServer.getInstance().getTopOfFaceLib(frFace);  //获取循环比对结果  这里比对
+                        Log.i(TAG, "subscribe: fr search end = " + System.currentTimeMillis() + " trackId = " + requestId);//这里打印多个
                         emitter.onNext(compareResult);
 
                     }
@@ -739,7 +759,7 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
                         }
 
                         Log.i(TAG, "onNext: fr search get result  = " + System.currentTimeMillis() + " trackId = " + requestId + "  similar = " + compareResult.getSimilar());
-                        if (compareResult.getSimilar() > SIMILAR_THRESHOLD) {
+                        if (compareResult.getSimilar() > SIMILAR_THRESHOLD) {  //这里判断  》0.8的进入
                             boolean isAdded = false;
                             if (compareResultList == null) {
                                 requestFeatureStatusMap.put(requestId, RequestFeatureStatus.FAILED);
@@ -752,25 +772,26 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
                                     break;
                                 }
                             }
-                            if (!isAdded) {//
+                            if (!isAdded) {
                                 //对于多人脸搜索，假如最大显示数量为 MAX_DETECT_NUM 且有新的人脸进入，则以队列的形式移除
-                                if (compareResultList.size() >= MAX_DETECT_NUM) {
+                                if (compareResultList.size() >= MAX_DETECT_NUM) {//你这是大于10个就移除了第一个
                                     compareResultList.remove(0);
                                     adapter.notifyItemRemoved(0);
                                 }
+                                //添加显示人员时，保存其trackId
                                 compareResult.setTrackId(requestId);
                                 compareResultList.add(compareResult);
+                                Log.e("compareResultList", compareResultList.size() + "///1");
                                 ArrayList<String> listname = new ArrayList<>();
-                                Log.e("compareResultList", compareResultList.size() + "///6");
                                 for (int i = 0; i < compareResultList.size(); i++) {
                                     listname.add(compareResultList.get(i).getUserName());
-                                   ToastUtils.showShort(compareResultList.get(i).getUserName());
-                                    Identity(compareResultList.get(i).getUserid());
+                                    Log.e("compareResultList", compareResultList.get(i).getUserid() + "///1");
+                                   // Identity(compareResultList.get(i).getUserid());
                                 }
-//                                listviewArcface.setAdapter(new Myadapter(listname));
-                                adapter.notifyItemInserted(compareResultList.size() - 1);
+                                stateface.setVisibility(View.GONE);
                             }
-                            stateface.setVisibility(View.GONE);
+//
+
 
                             requestFeatureStatusMap.put(requestId, RequestFeatureStatus.SUCCEED);
                             faceHelper.setName(requestId, getString(R.string.recognize_success_notice, compareResult.getUserName()));
@@ -778,14 +799,13 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
                         } else {
                             faceHelper.setName(requestId, getString(R.string.recognize_failed_notice, "!未通过"));
                             stateface.setVisibility(View.VISIBLE);
-                            iimub=iimub+1;
-                            if (iimub==5){
-                                iimub=0;
+                            iimub = iimub + 1;
+                            if (iimub == 5) {
+                                iimub = 0;
                             }
-                            if (iimub==1){
-                                Identity("1234aaaccc");
+                            if (iimub == 1) {
+                          //      Identity("1234aaaccc");
                             }
-                            Log.i("iimub",iimub+"");
 //                            stateface.setText("未检测到可识别的人脸");
                             retryRecognizeDelayed(requestId);
                         }
@@ -796,7 +816,7 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
                         try {
                             faceHelper.setName(requestId, getString(R.string.recognize_failed_notice, "!未通过"));
                             stateface.setVisibility(View.VISIBLE);
-                            stateface.setText("未检测到可识别的人脸");
+//                            stateface.setText("未检测到可识别的人脸");
                             retryRecognizeDelayed(requestId);
                         } catch (Exception e12) {
                         }
@@ -944,12 +964,24 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
                 });
     }
 
+
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        pd = new LoadingTools().pd(activity);
-//        camera.setOnFaceListener(this);
-//        camera.setFaceEnable(true);
+    public void onResume() {
+
+        super.onResume();
+        if (mp != null) {
+            mp.start();
+        }
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mp != null) {
+            mp.pause();
+        }
+
     }
 
     @Override
@@ -974,60 +1006,19 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements  ViewTr
         }
 
         FaceServer.getInstance().unInit();
+
+        if (mp != null) {
+            mp.stop();
+            mp.release();
+            mp = null;
+        }
+
         super.onDestroyView();
     }
 
 
 
 
-    void Identity(String userId) {
-        pd.show();
-        Log.e(TAG, "Identity: "+userId );
-        AppointmentOpenDoorReq req=new AppointmentOpenDoorReq();
-        req.cardNo = "456123";
-        req.officeId = SpData.User().data.officeId;
-        req.roomId = SpData.User().data.roomId;
-        MyApp.getInstance().requestData130(this, req, new signListenr(), new error());
-
-
-    }
-    class signListenr implements Response.Listener<AppointmentOpenDoorRsp> {
-
-        @Override
-        public void onResponse(final AppointmentOpenDoorRsp rsp) {
-            Log.e("json", "kaimenren" + JSON.toJSONString(rsp));
-            if (!activity.isDestroyed())
-                pd.dismiss();
-
-//            if (rsp == BaseConstant.REQUEST_SUCCES) {
-//                        IdManager.getInstance().notifyObserver(rsp.data.id);
-//            } else
-//                ToastUtils.showShort(rsp.info);
-        }
-    }
-
-    class error implements Response.ErrorListener {
-
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            if (!activity.isDestroyed())
-                pd.dismiss();
-
-            ToastUtils.showShort("请求失败，请重试");
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-    }
 
 
 }

@@ -13,7 +13,11 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.blankj.utilcode.util.SPUtils;
+import com.yyide.doorcontrol.MyApp;
 import com.yyide.doorcontrol.R;
 import com.yyide.doorcontrol.SpData;
 import com.yyide.doorcontrol.activity.EquipmentUpgradingActivity;
@@ -21,15 +25,22 @@ import com.yyide.doorcontrol.activity.SettingActivity;
 import com.yyide.doorcontrol.base.BaseActivity;
 import com.yyide.doorcontrol.base.BaseConstant;
 import com.yyide.doorcontrol.brocast.Brocast;
+import com.yyide.doorcontrol.dialog.EQEMsgDiallog;
+import com.yyide.doorcontrol.login.DoorCardAppointmentFragment;
 import com.yyide.doorcontrol.login.FaceEquitmentAppointmentFragment;
 import com.yyide.doorcontrol.observer.IdListener;
 import com.yyide.doorcontrol.observer.IdManager;
+import com.yyide.doorcontrol.requestbean.SaveDeviceRepairReq;
+import com.yyide.doorcontrol.rsponbean.SaveDeviceRepairRsp;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class IdentityEquipmentAppointmentActivity   extends BaseActivity implements IdListener {
+public class IdentityEquipmentAppointmentActivity extends BaseActivity implements IdListener {
 
     @BindView(R.id.content)
     FrameLayout content;
@@ -45,27 +56,28 @@ public class IdentityEquipmentAppointmentActivity   extends BaseActivity impleme
     public static String SETTING = "SETTING";
     @BindView(R.id.close_layout)
     FrameLayout closeLayout;
-
+    String name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identity);
         ButterKnife.bind(this);
+        name = getIntent().getStringExtra("content");
         if (savedInstanceState == null) {
 
-                if (SpData.CheackPower("4"))
-                    setTab(0);
-                else if (SpData.CheackPower("3"))
-                    setTab(1);
-                else if (SpData.CheackPower("5"))
-                    setTab(2);
-
+//                if (SpData.CheackPower("4"))
+//                    setTab(0);
+//                else if (SpData.CheackPower("3"))
+//                    setTab(1);
+//                else if (SpData.CheackPower("5"))
+//                    setTab(2);
+            setTab(0);
         }
         toDoType = getIntent().getIntExtra(BaseConstant.DOSHOMTHING, -1);
-        btn1.setVisibility(SpData.CheackPower("4") ? View.VISIBLE : View.GONE);
-        btn2.setVisibility(SpData.CheackPower("3") ? View.VISIBLE : View.GONE);
-        btn3.setVisibility(SpData.CheackPower("5") ? View.VISIBLE : View.GONE);
+//        btn1.setVisibility(SpData.CheackPower("4") ? View.VISIBLE : View.GONE);
+//        btn2.setVisibility(SpData.CheackPower("3") ? View.VISIBLE : View.GONE);
+//        btn3.setVisibility(SpData.CheackPower("5") ? View.VISIBLE : View.GONE);
 
         if (!SpData.CheackPower("5") && !SpData.CheackPower("3") && !SpData.CheackPower("4")) {
             Toast.makeText(this, "请联系管理员开通身份验证方式", Toast.LENGTH_SHORT).show();
@@ -118,7 +130,7 @@ public class IdentityEquipmentAppointmentActivity   extends BaseActivity impleme
         switch (position) {
             case 0:
                 if (fCard == null) {
-                   // fCard = new CardFragmenType();
+                    fCard = new CardEquitmentAppointmentFragment();
                     ft.add(R.id.content, fCard, String.valueOf(btn1.getId()));
                 } else
                     ft.show(fCard);
@@ -126,7 +138,7 @@ public class IdentityEquipmentAppointmentActivity   extends BaseActivity impleme
                 break;
             case 1:
                 if (fFace == null) {
-                fFace = new FaceEquitmentAppointmentFragment();
+                    fFace = new FaceEquitmentAppointmentFragment();
                     ft.add(R.id.content, fFace, String.valueOf(btn2.getId()));
                 } else
                     ft.show(fFace);
@@ -135,7 +147,7 @@ public class IdentityEquipmentAppointmentActivity   extends BaseActivity impleme
 
             case 2:
                 if (fAccount == null) {
-                //    fAccount = new FingerFragment();
+                    //    fAccount = new FingerFragment();
                     ft.add(R.id.content, fAccount, String.valueOf(btn3.getId()));
                 } else
                     ft.show(fAccount);
@@ -186,12 +198,9 @@ public class IdentityEquipmentAppointmentActivity   extends BaseActivity impleme
 //                startActivity(intent2);
 //                finish();
 //                break;
-//            case BaseConstant.EQE:
-//                Intent intent3 = new Intent(this, EquipmentUpgradingActivity.class);
-//                intent3.putExtra(AddMeetActivityStep1.TEACHERID, id);
-//                startActivity(intent3);
-//                finish();
-//                break;
+            case BaseConstant.EQE:
+                PostData(id);
+                break;
 //            case BaseConstant.WIFI:
 //                startActivity(new Intent(Settings.ACTION_SETTINGS));
 //                Brocast.showBar(this);
@@ -203,6 +212,50 @@ public class IdentityEquipmentAppointmentActivity   extends BaseActivity impleme
 //                startActivity(intent4);
 //                finish();
 //                break;
+        }
+    }
+
+
+    void PostData(String id) {
+        SaveDeviceRepairReq req = new SaveDeviceRepairReq();
+        req.officeId = SpData.User().data.officeId;
+        req.repairId = id;
+//        Log.e("TAG", "PostData: "+SpData.User().data );
+        req.roomId = SpData.User().data.roomId;
+        try {
+
+            req.details = URLEncoder.encode(name, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        MyApp.getInstance().requestData(this, req, new sListener(), new Error());
+    }
+
+
+    class sListener implements Response.Listener<SaveDeviceRepairRsp> {
+
+        @Override
+        public void onResponse(SaveDeviceRepairRsp rsp) {
+            Log.e("TAG", "onResponse: " + JSON.toJSON(rsp));
+
+            if (rsp.status == BaseConstant.REQUEST_SUCCES) {
+
+                if (!isDestroyed()) {
+                    new EQEMsgDiallog(IdentityEquipmentAppointmentActivity.this, "您的报修已提交至会议室管理员").show();
+                }
+
+
+            } else {
+                Toast.makeText(IdentityEquipmentAppointmentActivity.this, rsp.info, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    class Error implements Response.ErrorListener {
+
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
+
         }
     }
 

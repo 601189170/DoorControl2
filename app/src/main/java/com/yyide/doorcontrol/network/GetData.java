@@ -26,9 +26,9 @@ public class GetData {
 
 
     // 音频上传的接口
-//    public static final String UPLOAD_URL = URL + "upload.html";
-    public static final String FaceUrl = "http://120.76.189.190:8099/java-external-docking";
-//    public static final String FaceUrl = "http://192.168.3.130:8000/java-docking";
+   //    public static final String UPLOAD_URL = URL + "upload.html";
+  //  public static final String FaceUrl = "http://120.76.189.190:8099/java-external-docking";
+    public static final String FaceUrl = "http://192.168.3.130:8000/java-docking";
     public static final String url2 = "http://120.76.189.190";
 
     public static final String url3 = "http://192.168.3.130";

@@ -106,11 +106,7 @@ public class MyApp extends Application {
 //            readIcCard();
         }
 
-
-
         readCard();
-
-
 
     }
 
@@ -153,12 +149,6 @@ public class MyApp extends Application {
         @Override
         public void run() {
             while (mInputStream != null && mReadThread == Thread.currentThread()) {
-
-
-
-
-
-
 
                     byte[] buffer = new byte[64];
                     try {
@@ -381,8 +371,7 @@ public class MyApp extends Application {
 
 
 
-    public <T> void requestDataBend(Object tag, BaseBeanReq<T> object, Response.Listener<T> listener,
-                                    Response.ErrorListener errorListener) {
+    public <T> void requestDataBend(Object tag, BaseBeanReq<T> object, Response.Listener<T> listener,Response.ErrorListener errorListener) {
         MyHashMap map = new MyHashMap();
         map.putAll(object2Map(object));
         String encryStr = AuthcodeTwo.authcodeEncode(map.toString(), GetData.URL_KEY);
@@ -400,8 +389,7 @@ public class MyApp extends Application {
 
 
 
-    public <T> void requestYideData(Object tag, BaseBeanReq<T> object, Response.Listener<T> listener,
-                                    Response.ErrorListener errorListener) {
+    public <T> void requestYideData(Object tag, BaseBeanReq<T> object, Response.Listener<T> listener, Response.ErrorListener errorListener) {
 
         MyHashMap map = new MyHashMap();
 

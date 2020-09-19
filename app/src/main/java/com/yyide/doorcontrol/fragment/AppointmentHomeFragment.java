@@ -98,7 +98,7 @@ public class AppointmentHomeFragment extends BaseFragment {
     void FindHomePage() {
         AppointmentHomePageInfoReq req = new AppointmentHomePageInfoReq();
         req.signId = SpData.User().data.signId;
-        MyApp.getInstance().requestData130(this, req, new Listener(), new Error());
+        MyApp.getInstance().requestData(this, req, new Listener(), new Error());
     }
 
     @Override
@@ -229,17 +229,13 @@ public class AppointmentHomeFragment extends BaseFragment {
 
 
 
-
-
-
-
-
-
     @OnClick(R.id.img_open_door)
     public void onViewClicked(View view) {
         switch (view.getId()){
             case R.id.img_open_door:
-                startActivity(new Intent(getActivity(), DoorCheckAppointmentActivity.class));
+                Intent intent=new Intent(getActivity(),DoorCheckAppointmentActivity.class);
+                intent.putExtra(BaseConstant.DOSHOMTHING, BaseConstant.Door);
+                startActivity(intent);
                 break;
 
 

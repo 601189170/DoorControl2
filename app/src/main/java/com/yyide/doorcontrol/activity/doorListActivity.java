@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
+
 import com.google.gson.reflect.TypeToken;
 import com.ttlock.bl.sdk.api.ExtendedBluetoothDevice;
 import com.ttlock.bl.sdk.api.TTLockClient;

@@ -51,8 +51,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ButterKnife.bind(this);
         pd = new LoadingTools().pd(this);
         if (AppUtils.isAppDebug()) {
-            et1.setText("zj0212");
-            et2.setText("123456");
+            et1.setText("MJ0065");
+            et2.setText("123");
         }
 
         Intent intent = getIntent();

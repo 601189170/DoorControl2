@@ -71,7 +71,7 @@ public class PassWordFragment extends BaseFragment {
     @OnClick(R.id.config)
     public void onViewClicked() {
         String passw = userPwd.getText().toString().trim();
-        if (!TextUtils.isEmpty(passw)){
+        if (TextUtils.isEmpty(passw)){
             ToastUtils.showShort("请输入密码");
         }else {
             Identity(passw);

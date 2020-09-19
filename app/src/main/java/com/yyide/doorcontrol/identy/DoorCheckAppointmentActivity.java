@@ -14,9 +14,11 @@ import android.widget.TextView;
 import com.yyide.doorcontrol.R;
 import com.yyide.doorcontrol.base.BaseActivity;
 import com.yyide.doorcontrol.base.BaseConstant;
+import com.yyide.doorcontrol.brocast.Brocast;
 import com.yyide.doorcontrol.login.DoorAccountAppointmentFragment;
 import com.yyide.doorcontrol.login.DoorCardAppointmentFragment;
 import com.yyide.doorcontrol.login.DoorFaceAppointmentFragment;
+import com.yyide.doorcontrol.login.DoorFaceFragment;
 import com.yyide.doorcontrol.observer.IdListener;
 import com.yyide.doorcontrol.observer.IdManager;
 
@@ -114,7 +116,8 @@ public class DoorCheckAppointmentActivity  extends BaseActivity implements IdLis
                 break;
             case 1:
                 if (fFace == null) {
-                    fFace = new DoorFaceAppointmentFragment();
+                   fFace = new DoorFaceAppointmentFragment();
+                   // fFace = new DoorFaceFragment();
                     ft.add(R.id.content, fFace, String.valueOf(btn2.getId()));
                 } else
                     ft.show(fFace);
@@ -183,15 +186,15 @@ public class DoorCheckAppointmentActivity  extends BaseActivity implements IdLis
 
     /*处理事件*/
     void doSomeThing(String id) {
-        Intent intent;
-        switch (toDoType) {
-            case BaseConstant.SETTING:
-//                intent = new Intent(this, SettingActivity.class);
-//                startActivity(intent);
-//                finish();
-                break;
 
-        }
+            switch (toDoType) {
+                case BaseConstant.Door:
+                    Brocast.open(this);
+
+                    break;
+
+
+            }
     }
 
 
