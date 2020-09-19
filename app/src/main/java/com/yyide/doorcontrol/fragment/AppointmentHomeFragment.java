@@ -195,7 +195,7 @@ public class AppointmentHomeFragment extends BaseFragment {
                     tvDeviceInfo.setText(rsp.data.deviceName);
                 }
                 if (null!=rsp.data.zuzhizhe){
-                    tvAdministrator.setText(rsp.data.zuzhizhe);
+                    tvAdministrator.setText(rsp.data.zuzhizhe+"      "+rsp.data.phone);
                 }
                 if (null != rsp.data.freeTime) {
                     tvFreeTime.setText(rsp.data.freeTime);
@@ -213,7 +213,6 @@ public class AppointmentHomeFragment extends BaseFragment {
 
 
         }
-
     }
 
 
@@ -237,9 +236,6 @@ public class AppointmentHomeFragment extends BaseFragment {
                 intent.putExtra(BaseConstant.DOSHOMTHING, BaseConstant.Door);
                 startActivity(intent);
                 break;
-
-
         }
-
     }
 }

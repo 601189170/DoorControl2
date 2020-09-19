@@ -69,7 +69,6 @@ public class BluetoothService extends Service  {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         String command = intent.getStringExtra(BaseConstant.Command);
         if (!TextUtils.isEmpty(command)) {
             switch (command) {

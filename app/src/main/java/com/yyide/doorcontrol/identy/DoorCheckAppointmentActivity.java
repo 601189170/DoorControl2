@@ -116,7 +116,7 @@ public class DoorCheckAppointmentActivity  extends BaseActivity implements IdLis
                 break;
             case 1:
                 if (fFace == null) {
-                   fFace = new DoorFaceAppointmentFragment();
+                  fFace = new DoorFaceAppointmentFragment();
                    // fFace = new DoorFaceFragment();
                     ft.add(R.id.content, fFace, String.valueOf(btn2.getId()));
                 } else

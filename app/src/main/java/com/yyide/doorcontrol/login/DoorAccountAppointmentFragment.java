@@ -79,12 +79,10 @@ public class DoorAccountAppointmentFragment extends BaseFragment {
         req.officeId = SpData.User().data.officeId;
         req.roomId = SpData.User().data.roomId;
         req.temporaryPassword = passw;
-
         MyApp.getInstance().requestData(this, req, new signListenr(), new error());
     }
 
     class signListenr implements Response.Listener<DoorControlRsp> {
-
         @Override
         public void onResponse(final DoorControlRsp rsp) {
             if (!activity.isDestroyed())

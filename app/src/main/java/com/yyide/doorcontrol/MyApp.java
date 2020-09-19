@@ -412,4 +412,32 @@ public class MyApp extends Application {
         queue.add(request);
 
     }
+
+    /**
+    * 直接使用的预约系统的接口
+    * */
+
+    public <T> void requestYySystemData(Object tag, BaseBeanReq<T> object, Response.Listener<T> listener, Response.ErrorListener errorListener) {
+
+        MyHashMap map = new MyHashMap();
+
+        map.putAll(object2Map(object));
+
+        String encryStr = AuthcodeTwo.authcodeEncode(map.toString(), GetData.URL_KEY);
+
+        FastJsonRequest<T> request = new FastJsonRequest<>(GetData.requestUrlYySystem(object),
+                object.myTypeReference(), listener, errorListener,
+                encryStr);
+
+        request.setShouldCache(true);
+
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                5000, 1,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        request.setTag(tag);
+
+        queue.add(request);
+
+    }
 }

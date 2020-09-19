@@ -82,7 +82,7 @@ public class CardEquitmentAppointmentFragment extends BaseFragment implements Ob
         req.cardNo=cardNo;
         req.type="1";
 
-        MyApp.getInstance().requestData(this,req,new AuthListener(),new ErrorListener());
+        MyApp.getInstance().requestYySystemData(this,req,new AuthListener(),new ErrorListener());
     }
 
     class AuthListener implements Response.Listener<AuthenticationRsp>{

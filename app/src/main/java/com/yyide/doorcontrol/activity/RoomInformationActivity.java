@@ -7,7 +7,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yyide.doorcontrol.R;
+import com.yyide.doorcontrol.SpData;
 import com.yyide.doorcontrol.base.BaseActivity;
+import com.yyide.doorcontrol.rsponbean.AppointmentHomePageInfoRsp;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +26,13 @@ public class RoomInformationActivity extends BaseActivity {
     LinearLayout llBack;
     @BindView(R.id.title)
     TextView title;
+    @BindView(R.id.tv_galleryful)
+    TextView tvGalleryful;
+    @BindView(R.id.tv_device_info)
+    TextView tvDeviceInfo;
+    @BindView(R.id.tv_administrator)
+    TextView tvAdministrator;
+    AppointmentHomePageInfoRsp bean;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +40,17 @@ public class RoomInformationActivity extends BaseActivity {
         setContentView(R.layout.activity_room_information);
         ButterKnife.bind(this);
 
+        bean=   SpData.AppointmentHomeData();
+
+        if (null != bean.data.capacity) {
+            tvGalleryful.setText(bean.data.capacity);
+        }
+        if (null != bean.data.deviceName) {
+            tvDeviceInfo.setText(bean.data.deviceName);
+        }
+        if (null!=bean.data.zuzhizhe){
+            tvAdministrator.setText(bean.data.zuzhizhe+"      "+bean.data.phone);
+        }
 
     }
 

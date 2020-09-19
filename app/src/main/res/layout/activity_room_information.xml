@@ -36,101 +36,97 @@
             android:textStyle="bold" />
     </LinearLayout>
 
+
+
+
+
     <LinearLayout
+        android:id="@+id/ll_status3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <FrameLayout
-            android:layout_width="1060dp"
-            android:layout_height="306dp">
+        android:orientation="vertical"
+        android:paddingLeft="200dp"
+        android:visibility="visible">
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingLeft="40dp"
-                android:paddingRight="40dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-                <com.yyide.doorcontrol.view.MultiStateView
-                    android:id="@+id/mu"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:msv_emptyView="@layout/layout_empty"
-                    app:msv_errorView="@layout/layout_error"
-                    app:msv_loadingView="@layout/layout_loading">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="容纳人数:"
+                android:textColor="@color/black3"
+                android:textSize="24dp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:layout_marginTop="60dp"
-                            android:background="#e6ecff">
-
-                            <TextView
-                                android:id="@+id/tx1"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="2"
-                                android:gravity="center"
-                                android:text="教学主题"
-                                android:textColor="#333333"
-                                android:textSize="22dp" />
-
-                            <TextView
-                                android:id="@+id/tx2"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="年班级"
-                                android:textColor="#333333"
-                                android:textSize="22dp" />
-
-                            <TextView
-                                android:id="@+id/tx3"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="时间"
-                                android:textColor="#333333"
-                                android:textSize="22dp" />
-
-                            <TextView
-                                android:id="@+id/tx4"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="组织者"
-                                android:textColor="#333333"
-                                android:textSize="22dp" />
-
-                        </LinearLayout>
-
-                        <ListView
-                            android:id="@+id/list"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:divider="@color/lineing2"
-                            android:dividerHeight="1dp"
-                            android:listSelector="@color/float_transparent" />
-                    </LinearLayout>
-                </com.yyide.doorcontrol.view.MultiStateView>
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_galleryful"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text=""
+                android:textColor="@color/black3"
+                android:textSize="24dp" />
 
 
-        </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设备信息:"
+                android:textColor="@color/black3"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/tv_device_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text=""
+                android:textColor="@color/black3"
+                android:textSize="24dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="管 理 员:"
+                android:textColor="@color/black3"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/tv_administrator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text=""
+                android:textColor="@color/black3"
+                android:textSize="24dp" />
+
+
+        </LinearLayout>
+
+
+
+
+
 
     </LinearLayout>
 

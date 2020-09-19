@@ -20,7 +20,7 @@ public class GetTodayReservationListReq extends BaseBeanReq<GetTodayReservationL
 
 
     @Override
-    public String myAddr() {
+    public String myAddr() {//http://192.168.3.130:8094/api/reservation/getTodayReservationList预约系统
         return "/api/reservation/getTodayReservationList";
     }
 

@@ -228,7 +228,7 @@ public class IdentityEquipmentAppointmentActivity extends BaseActivity implement
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        MyApp.getInstance().requestData(this, req, new sListener(), new Error());
+        MyApp.getInstance().requestYySystemData(this, req, new sListener(), new Error());
     }
 
 

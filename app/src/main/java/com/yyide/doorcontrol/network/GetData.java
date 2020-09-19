@@ -57,6 +57,30 @@ public class GetData {
         return  url+BIp;
 //        return "http://" + SPUtils.getInstance().getString(BaseConstant.NUMBER, URL_IP) + BIp;
     }
+
+    public static String YySystemUrl() {
+        String url;
+        String ipNum_system;
+        String port = SPUtils.getInstance().getString(BaseConstant.NUMBER, GetData.URL_IP);
+        if (port.contains(":")) {
+            String[] ip = port.split(":");
+            url="http://" + ip[0];
+            Log.e("TAG", "调用预约系统的接口MinaUrl1: "+ url);
+        }else {
+            url="http://" + SPUtils.getInstance().getString(BaseConstant.NUMBER, URL_IP);
+            Log.e("TAG", "调用预约系统的接口MinaUrl2: "+ url);
+        }
+        Log.e("TAG","调用预约系统的接口"+url);
+
+        if (url.contains("3.130")){
+            ipNum_system=":8094";
+        }else {
+            ipNum_system=":8088";
+        }
+        return  url+ipNum_system;
+//        return "http://" + SPUtils.getInstance().getString(BaseConstant.NUMBER, URL_IP) + BIp;
+    }
+
     public static <T> String requestUrlYydUrl(BaseBeanReq<T> bean) {
 
         try {
@@ -157,6 +181,32 @@ public class GetData {
         }
 
     }
+
+    public static <T> String requestUrlYySystem(BaseBeanReq<T> bean) {
+
+        try {
+
+            MyHashMap map = new MyHashMap();
+
+            map.putAll(Object2Map.object2Map(bean));
+
+            String encryStr = AuthcodeTwo.authcodeEncode(map.toString(), URL_KEY);
+
+            String urlRequest = YySystemUrl() + bean.myAddr() + "?input=" + URLEncoder.encode(encryStr, "UTF-8");
+
+            L.d("JSON", urlRequest);
+
+            L.d("JSON", JSON.toJSONString(bean));
+
+            return urlRequest;
+
+        } catch (Exception e) {
+
+            return null;
+        }
+
+    }
+
     public static <T> String requestUrlHRFace(BaseBeanReq<T> bean) {
 
         try {

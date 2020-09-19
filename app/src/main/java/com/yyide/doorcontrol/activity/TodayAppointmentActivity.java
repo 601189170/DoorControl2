@@ -135,8 +135,8 @@ public class TodayAppointmentActivity extends BaseActivity {
         GetTodayReservationListReq req = new GetTodayReservationListReq();
         req.officeId = SpData.User().data.officeId;
         req.roomId = SpData.User().data.roomId;
-
-        MyApp.getInstance().requestData(this, req, new sListener(), new Error());
+        //直接使用预约系统的接口
+        MyApp.getInstance().requestYySystemData(this, req, new sListener(), new Error());
     }
 
 

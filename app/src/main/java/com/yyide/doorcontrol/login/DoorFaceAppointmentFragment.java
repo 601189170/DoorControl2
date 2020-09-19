@@ -786,7 +786,7 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements ViewTre
                                 for (int i = 0; i < compareResultList.size(); i++) {
                                     listname.add(compareResultList.get(i).getUserName());
                                     Log.e("compareResultList", compareResultList.get(i).getUserid() + "///1");
-                                   // Identity(compareResultList.get(i).getUserid());
+                                 Identity(compareResultList.get(i).getUserid());
                                 }
                                 stateface.setVisibility(View.GONE);
                             }
@@ -804,7 +804,7 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements ViewTre
                                 iimub = 0;
                             }
                             if (iimub == 1) {
-                          //      Identity("1234aaaccc");
+                               Identity("1234aaaccc");
                             }
 //                            stateface.setText("未检测到可识别的人脸");
                             retryRecognizeDelayed(requestId);
@@ -1016,6 +1016,42 @@ public class DoorFaceAppointmentFragment extends BaseFragment implements ViewTre
         super.onDestroyView();
     }
 
+    void Identity(String useId) {
+        DoorControlReq req = new DoorControlReq();
+        req.userId = useId;
+        req.officeId = SpData.User().data.officeId;
+        req.roomId = SpData.User().data.roomId;
+        MyApp.getInstance().requestData(this, req, new signListenr(), new error());
+    }
+
+
+
+
+    class signListenr implements Response.Listener<DoorControlRsp> {
+
+        @Override
+        public void onResponse(final DoorControlRsp rsp) {
+            Log.e("json", "kaimenren" + JSON.toJSONString(rsp));
+            if (!activity.isDestroyed())
+                pd.dismiss();
+
+            if (rsp.status == BaseConstant.REQUEST_SUCCES2) {
+                IdManager.getInstance().notifyObserver("");
+            } else
+                ToastUtils.showShort(rsp.msg);
+        }
+    }
+
+    class error implements Response.ErrorListener {
+
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
+            if (!activity.isDestroyed())
+                pd.dismiss();
+
+            ToastUtils.showShort("请求失败，请重试");
+        }
+    }
 
 
 

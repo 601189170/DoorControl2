@@ -102,19 +102,23 @@ public class AppointmentMenuFragment extends BaseFragment {
 
                         break;
                     case 1:
+                        //今日预约
                         intent = new Intent(getActivity(), TodayAppointmentActivity.class);
                         startActivity(intent);
 
                         break;
                     case 2:
+                        //房间信息
                         intent = new Intent(getActivity(), RoomInformationActivity.class);
                         startActivity(intent);
                         break;
                     case 3:
+                        //设备报修
                         intent = new Intent(getActivity(), EquipmentUpgradingActivity.class);
                         startActivity(intent);
                         break;
                     case 4:
+                        //切换账号
                         ActivityUtils.finishAllActivities();
                         SPUtils.getInstance().remove(BaseConstant.LOGINNAME);
                         SPUtils.getInstance().remove(BaseConstant.PASSWORD);
@@ -131,7 +135,9 @@ public class AppointmentMenuFragment extends BaseFragment {
                     case 6:
                         //系统设置
                         intent = new Intent(getActivity(), AppointmentSettingCheckActivity.class);
+                        intent.putExtra(BaseConstant.DOSHOMTHING, BaseConstant.SETTING);
                         startActivity(intent);
+
                         break;
 
                     case 7:

@@ -950,7 +950,7 @@ public class FaceEquitmentAppointmentFragment extends BaseFragment implements Vi
         AuthenticationReq req = new AuthenticationReq();
         req.officeId = SpData.User().data.officeId;
         req.userId = userId;
-        MyApp.getInstance().requestData(this, req, new AuthListener(), new ErrorListener());
+        MyApp.getInstance().requestYySystemData(this, req, new AuthListener(), new ErrorListener());
     }
 
     class AuthListener implements Response.Listener<AuthenticationRsp> {
