@@ -380,7 +380,8 @@ public class GetData {
     }
 
     public static String url() {
-        return "http://" + SPUtils.getInstance().getString(BaseConstant.NUMBER, URL_IP);
+       return "http://192.168.3.109:8022" ;
+     //  return "http://" + SPUtils.getInstance().getString(BaseConstant.NUMBER, URL_IP);
     }
 
     public static String imageUrl() {

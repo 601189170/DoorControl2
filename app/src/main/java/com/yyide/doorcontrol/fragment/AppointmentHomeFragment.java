@@ -20,6 +20,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.yyide.doorcontrol.MyApp;
 import com.yyide.doorcontrol.R;
 import com.yyide.doorcontrol.SpData;
+import com.yyide.doorcontrol.activity.IdentityActivity3;
 import com.yyide.doorcontrol.base.BaseConstant;
 import com.yyide.doorcontrol.base.BaseFragment;
 import com.yyide.doorcontrol.identy.DoorCheckAppointmentActivity;
@@ -33,7 +34,6 @@ import butterknife.OnClick;
 public class AppointmentHomeFragment extends BaseFragment {
     @BindView(R.id.img_open_door)
     ImageView img_open_door;
-    AppointmentHomePageInfoRsp rsp;
     @BindView(R.id.ll_status1)
     LinearLayout ll_status1;
     @BindView(R.id.tv_now_appointment_name)
@@ -46,6 +46,10 @@ public class AppointmentHomeFragment extends BaseFragment {
     TextView tv_check_num;
     @BindView(R.id.tv_look_detail)
     TextView tv_look_detail;
+    @BindView(R.id.post)
+    TextView post;
+
+
 
     @BindView(R.id.ll_status2)
     RelativeLayout llStatus2;
@@ -78,7 +82,7 @@ public class AppointmentHomeFragment extends BaseFragment {
     TextView tvFreeTime;
 
 
-
+    String meetId;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -228,9 +232,16 @@ public class AppointmentHomeFragment extends BaseFragment {
 
 
 
-    @OnClick(R.id.img_open_door)
+    @OnClick({R.id.post,R.id.img_open_door})
     public void onViewClicked(View view) {
         switch (view.getId()){
+            case R.id.post:
+                Log.e("会议考勤","post");
+                Intent intent1 = new Intent(getActivity(), IdentityActivity3.class);
+                intent1.putExtra("meetId", meetId);
+                intent1.putExtra(BaseConstant.DOSHOMTHING, BaseConstant.EQE);
+                startActivity(intent1);
+                break;
             case R.id.img_open_door:
                 Intent intent=new Intent(getActivity(),DoorCheckAppointmentActivity.class);
                 intent.putExtra(BaseConstant.DOSHOMTHING, BaseConstant.Door);

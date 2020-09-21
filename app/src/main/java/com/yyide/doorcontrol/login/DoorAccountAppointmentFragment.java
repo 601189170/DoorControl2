@@ -19,7 +19,9 @@ import com.yyide.doorcontrol.SpData;
 import com.yyide.doorcontrol.base.BaseConstant;
 import com.yyide.doorcontrol.base.BaseFragment;
 import com.yyide.doorcontrol.observer.IdManager;
+import com.yyide.doorcontrol.requestbean.AppointmentOpenDoorReq;
 import com.yyide.doorcontrol.requestbean.DoorControlReq;
+import com.yyide.doorcontrol.rsponbean.AppointmentOpenDoorRsp;
 import com.yyide.doorcontrol.rsponbean.DoorControlRsp;
 import com.yyide.doorcontrol.utils.LoadingTools;
 
@@ -75,16 +77,16 @@ public class DoorAccountAppointmentFragment extends BaseFragment {
     void Identity(String passw) {
         if (!activity.isDestroyed())
             pd.show();
-        DoorControlReq req = new DoorControlReq();
+        AppointmentOpenDoorReq req=new AppointmentOpenDoorReq();
         req.officeId = SpData.User().data.officeId;
         req.roomId = SpData.User().data.roomId;
         req.temporaryPassword = passw;
         MyApp.getInstance().requestData(this, req, new signListenr(), new error());
     }
 
-    class signListenr implements Response.Listener<DoorControlRsp> {
+    class signListenr implements Response.Listener<AppointmentOpenDoorRsp> {
         @Override
-        public void onResponse(final DoorControlRsp rsp) {
+        public void onResponse(final AppointmentOpenDoorRsp rsp) {
             if (!activity.isDestroyed())
                 pd.dismiss();
 

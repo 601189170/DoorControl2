@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/tv_now_appointment_name"
@@ -35,10 +35,26 @@
             android:text="1111" />
 
 
+
+        <TextView
+            android:id="@+id/post"
+            android:layout_width="261dp"
+            android:layout_height="46dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="36dp"
+
+            android:background="@mipmap/chexkq_btn1"
+            android:gravity="center"
+            android:text="考 勤"
+            android:textColor="@color/white"
+            android:textSize="24dp" />
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -46,7 +62,6 @@
                 android:id="@+id/tv_check_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:gravity="center"
                 android:text="1111" />
 
@@ -129,7 +144,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:paddingLeft="200dp"
-        android:visibility="visible">
+        android:visibility="gone">
 
 
         <LinearLayout

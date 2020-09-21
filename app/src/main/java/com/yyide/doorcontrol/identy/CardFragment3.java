@@ -1,8 +1,9 @@
-package com.yyide.doorcontrol.login;
+package com.yyide.doorcontrol.identy;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,25 +15,26 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.yyide.doorcontrol.MyApp;
 import com.yyide.doorcontrol.R;
 import com.yyide.doorcontrol.SpData;
+import com.yyide.doorcontrol.activity.IdentityActivity3;
 import com.yyide.doorcontrol.base.BaseConstant;
 import com.yyide.doorcontrol.base.BaseFragment;
-import com.yyide.doorcontrol.observer.IdManager;
+import com.yyide.doorcontrol.dialog.AttendanceDialog;
 import com.yyide.doorcontrol.observer.ObserverListener;
 import com.yyide.doorcontrol.observer.ObserverManager;
-import com.yyide.doorcontrol.requestbean.AuthenticationReq;
-import com.yyide.doorcontrol.requestbean.DoorControlReq;
-import com.yyide.doorcontrol.rsponbean.AuthenticationRsp;
-import com.yyide.doorcontrol.rsponbean.DoorControlRsp;
-import com.yyide.doorcontrol.utils.L;
+import com.yyide.doorcontrol.requestbean.SaveMeetAttendanceReq;
+import com.yyide.doorcontrol.rsponbean.SaveMeetAttendanceRsp;
 import com.yyide.doorcontrol.utils.LoadingTools;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+
+
 /**
- *
- * 预约——系统设置——刷卡
- * */
-public class CardAppointmentSettingFragment extends BaseFragment implements ObserverListener {
+ *会议考勤刷卡
+ */
+public class CardFragment3 extends BaseFragment implements ObserverListener {
     SweetAlertDialog pd;
+    String meetId;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,20 +45,13 @@ public class CardAppointmentSettingFragment extends BaseFragment implements Obse
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         pd = new LoadingTools().pd(activity);
-//        auth("3922293990");
+        meetId = getArguments().getString(IdentityActivity3.MEETID);
+        Log.e("TAG", "CardFragment3: "+meetId );
+
         if (AppUtils.isAppDebug()){
-//            auth("76627483");
-//            auth("77415467");
 //            auth("3921910022");
-//            auth("244038465");
-//            auth("244038465");
-//            auth("242781425");
-//            auth("3921991238");
-//            auth("3921910022");
-//            auth("3921910022");
-//            auth("3922371462");
-            auth("3709721529");
-//            auth("3921991238");
+//            auth("3709721529");
+            auth("244200481");
         }
     }
 
@@ -74,26 +69,27 @@ public class CardAppointmentSettingFragment extends BaseFragment implements Obse
 
     @Override
     public void observerUpData(String cardNo) {
-
         auth(cardNo);
     }
 
     void auth(String cardNo){
         pd.show();
-        AuthenticationReq req=new AuthenticationReq();
-        req.officeId=SpData.User().data.officeId;
+        SaveMeetAttendanceReq req=new SaveMeetAttendanceReq();
+        req.officeId= SpData.User().data.officeId;
         req.cardNo=cardNo;
-
-        MyApp.getInstance().requestData(this,req,new AuthListener(),new ErrorListener());
+        req.meetingId=meetId;
+        MyApp.getInstance().requestYySystemData(this,req,new AuthListener(),new ErrorListener());
     }
 
-    class AuthListener implements Response.Listener<AuthenticationRsp>{
+    class AuthListener implements Response.Listener<SaveMeetAttendanceRsp>{
 
         @Override
-        public void onResponse(AuthenticationRsp response) {
+        public void onResponse(SaveMeetAttendanceRsp response) {
             pd.dismiss();
             if (response.status == BaseConstant.REQUEST_SUCCES) {
-                IdManager.getInstance().notifyObserver(response.data.id);
+                new AttendanceDialog(activity,response).show();
+
+//                IdManager.getInstance().notifyObserver("");
 //                SPUtils.getInstance().put(SpData.USERCENTER, JSON.toJSONString(rsp));
             } else {
                 ToastUtils.showShort(response.info);
@@ -105,6 +101,7 @@ public class CardAppointmentSettingFragment extends BaseFragment implements Obse
 
         @Override
         public void onErrorResponse(VolleyError error) {
+            ToastUtils.showShort("打卡失败");
             pd.dismiss();
         }
     }

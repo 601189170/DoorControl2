@@ -6,7 +6,6 @@ import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckedTextView;
 import android.widget.FrameLayout;
@@ -20,8 +19,9 @@ import com.yyide.doorcontrol.activity.SettingActivity;
 import com.yyide.doorcontrol.base.BaseActivity;
 import com.yyide.doorcontrol.base.BaseConstant;
 import com.yyide.doorcontrol.brocast.Brocast;
-import com.yyide.doorcontrol.login.CardAppointmentSettingFragment;
-import com.yyide.doorcontrol.login.FaceAppointmentSettingFragment;
+import com.yyide.doorcontrol.login.CardFragment;
+import com.yyide.doorcontrol.login.FaceFragment;
+import com.yyide.doorcontrol.login.SettingAccountFragment;
 import com.yyide.doorcontrol.observer.IdListener;
 import com.yyide.doorcontrol.observer.IdManager;
 
@@ -61,27 +61,27 @@ public class AppointmentSettingCheckActivity extends BaseActivity implements IdL
         ButterKnife.bind(this);
         if (savedInstanceState == null) {
 
-                if (SpData.CheackPower("4"))
-                    setTab(0);
-                else if (SpData.CheackPower("3"))
-                    setTab(1);
-                else if (SpData.CheackPower("5"))
-                    setTab(2);
-                else if (SpData.CheackPower("6"))
-                    setTab(3);
+//                if (SpData.CheackPower("4"))
+//                    setTab(0);
+//                else if (SpData.CheackPower("3"))
+//                    setTab(1);
+//                else if (SpData.CheackPower("5"))
+//                    setTab(2);
+//                else if (SpData.CheackPower("6"))
+//                    setTab(3);
 
-
+            setTab(0);
         }
         toDoType = getIntent().getIntExtra(BaseConstant.DOSHOMTHING, -1);
-        btn1.setVisibility(SpData.CheackPower("4") ? View.VISIBLE : View.GONE);
-        btn2.setVisibility(SpData.CheackPower("3") ? View.VISIBLE : View.GONE);
-        btn3.setVisibility(SpData.CheackPower("5") ? View.VISIBLE : View.GONE);
-        btn4.setVisibility(SpData.CheackPower("6") ? View.VISIBLE : View.GONE);
+//        btn1.setVisibility(SpData.CheackPower("4") ? View.VISIBLE : View.GONE);
+//        btn2.setVisibility(SpData.CheackPower("3") ? View.VISIBLE : View.GONE);
+//        btn3.setVisibility(SpData.CheackPower("5") ? View.VISIBLE : View.GONE);
+//        btn4.setVisibility(SpData.CheackPower("6") ? View.VISIBLE : View.GONE);
 
 //        setTab(1);
-        if (!SpData.CheackPower("5") && !SpData.CheackPower("3") && !SpData.CheackPower("4") && !SpData.CheackPower("6")) {
-            Toast.makeText(this, "请联系管理员开通身份验证方式", Toast.LENGTH_SHORT).show();
-        }
+//        if (!SpData.CheackPower("5") && !SpData.CheackPower("3") && !SpData.CheackPower("4") && !SpData.CheackPower("6")) {
+//            Toast.makeText(this, "请联系管理员开通身份验证方式", Toast.LENGTH_SHORT).show();
+//        }
         closeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,7 +134,7 @@ public class AppointmentSettingCheckActivity extends BaseActivity implements IdL
         switch (position) {
             case 0:
                 if (fCard == null) {
-                    fCard = new CardAppointmentSettingFragment();
+                    fCard = new CardFragment();
                     ft.add(R.id.content, fCard, String.valueOf(btn1.getId()));
                 } else
                     ft.show(fCard);
@@ -142,7 +142,7 @@ public class AppointmentSettingCheckActivity extends BaseActivity implements IdL
                 break;
             case 1:
                 if (fFace == null) {
-                    fFace = new FaceAppointmentSettingFragment();
+                    fFace = new FaceFragment();
                     ft.add(R.id.content, fFace, String.valueOf(btn2.getId()));
                 } else
                     ft.show(fFace);
@@ -150,7 +150,7 @@ public class AppointmentSettingCheckActivity extends BaseActivity implements IdL
                 break;
             case 2:
                 if (fAccount == null) {
-                 //   fAccount = new FingerFragment();
+                    fAccount = new SettingAccountFragment();
                     ft.add(R.id.content, fAccount, String.valueOf(btn3.getId()));
                 } else
                     ft.show(fAccount);
@@ -158,7 +158,7 @@ public class AppointmentSettingCheckActivity extends BaseActivity implements IdL
                 break;
             case 3:
                 if (set == null) {
-                  //  set = new SettingAccountFragment();
+                   set = new SettingAccountFragment();
                     ft.add(R.id.content, set, String.valueOf(btn4.getId()));
                 } else
                     ft.show(set);
@@ -214,14 +214,13 @@ public class AppointmentSettingCheckActivity extends BaseActivity implements IdL
 //                startActivity(intent3);
 //                finish();
 //                break;
-            case BaseConstant.WIFI:
-                startActivity(new Intent(Settings.ACTION_SETTINGS));
-                Brocast.showBar(this);
-                finish();
-                break;
+//            case BaseConstant.WIFI:
+//                startActivity(new Intent(Settings.ACTION_SETTINGS));
+//                Brocast.showBar(this);
+//                finish();
+//                break;
             case BaseConstant.SETTING:
                 Intent intent4 = new Intent(this, SettingActivity.class);
-               // intent4.putExtra(SettingActivity.TEACHERID, id);
                 startActivity(intent4);
                 finish();
                 break;

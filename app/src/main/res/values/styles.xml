@@ -32,7 +32,10 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#80504F4F</item>
+        <item name="colorControlActivated">#4757e8</item>
+    </style>
     <!--item字体 -->
     <style name="TextSize_24black">
         <item name="android:textSize">24dp</item>

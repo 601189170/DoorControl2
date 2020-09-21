@@ -20,7 +20,9 @@ import com.yyide.doorcontrol.base.BaseFragment;
 import com.yyide.doorcontrol.observer.IdManager;
 import com.yyide.doorcontrol.observer.ObserverListener;
 import com.yyide.doorcontrol.observer.ObserverManager;
+import com.yyide.doorcontrol.requestbean.AppointmentOpenDoorReq;
 import com.yyide.doorcontrol.requestbean.DoorControlReq;
+import com.yyide.doorcontrol.rsponbean.AppointmentOpenDoorRsp;
 import com.yyide.doorcontrol.rsponbean.DoorControlRsp;
 import com.yyide.doorcontrol.utils.LoadingTools;
 
@@ -72,7 +74,8 @@ public class DoorCardAppointmentFragment extends BaseFragment implements Observe
 
     void Identity(String cardNo) {
 
-        DoorControlReq req = new DoorControlReq();
+       // DoorControlReq req = new DoorControlReq();
+        AppointmentOpenDoorReq req=new AppointmentOpenDoorReq();
         req.cardNo = cardNo;
         req.officeId = SpData.User().data.officeId;
         req.roomId = SpData.User().data.roomId;
@@ -86,10 +89,9 @@ public class DoorCardAppointmentFragment extends BaseFragment implements Observe
     }
 
 
-    class signListenr implements Response.Listener<DoorControlRsp> {
-
+    class signListenr implements Response.Listener<AppointmentOpenDoorRsp> {
         @Override
-        public void onResponse(final DoorControlRsp rsp) {
+        public void onResponse(final AppointmentOpenDoorRsp rsp) {
             Log.e("json", "kaimenren" + JSON.toJSONString(rsp));
             if (!activity.isDestroyed())
                 pd.dismiss();

@@ -113,6 +113,10 @@
             <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
+        <!--预约门禁——会议考勤界面-->
+        <activity android:name=".activity.IdentityActivity3"
+            android:screenOrientation="landscape"
+            android:theme="@style/NoTitleDialog2"/>
 
         <!--预约门禁登录界面-->
         <!--预约门禁主界面-->

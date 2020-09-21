@@ -46,6 +46,9 @@ public class SettingActivity extends BaseActivity {
     LinearLayout layout8;
 
 
+
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
