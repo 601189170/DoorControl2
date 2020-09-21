@@ -237,9 +237,9 @@ public class DoorFaceFragment extends BaseFragment implements  ViewTreeObserver.
             FaceServer.getInstance().init(getActivity());
         }
 
-        if (AppUtils.isAppDebug()){
-            Identity("");
-        }
+//        if (AppUtils.isAppDebug()){
+//            Identity("");
+//        }
 //        mDbController = DbController.getInstance(RegisterAndRecognizeActivity.this);
         initView();
         return view;

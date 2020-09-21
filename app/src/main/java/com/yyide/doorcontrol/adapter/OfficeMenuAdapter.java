@@ -19,8 +19,9 @@ import java.util.List;
  */
 
 public class OfficeMenuAdapter extends BaseAdapter {
+    int[] list={R.drawable.icon_sqkm,R.drawable.icon_qhzh,R.drawable.icon_rjgx,R.drawable.icon_xtsz,R.drawable.icon_tcxt};
 
-    String[] list={"门禁申请","账号切换","软件更新","系统设置","退出系统"};
+//    String[] list={"门禁申请","账号切换","软件更新","系统设置","退出系统"};
 
     @Override
     public int getCount() {
@@ -29,7 +30,7 @@ public class OfficeMenuAdapter extends BaseAdapter {
 
     @Override
     public String getItem(int position) {
-        return list[position];
+        return "1";
     }
 
     @Override
@@ -42,8 +43,8 @@ public class OfficeMenuAdapter extends BaseAdapter {
         if (view == null)
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.office_menu_item, null, false);
         ImageView menu_img = VHUtil.ViewHolder.get(view, R.id.menu_img);
-        TextView menu_name = VHUtil.ViewHolder.get(view, R.id.menu_name);
-        menu_name.setText(getItem(position));
+        menu_img.setBackgroundResource(list[position]);
+
 
 
         return view;

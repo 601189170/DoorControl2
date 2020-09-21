@@ -2,18 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="400dp"
+<FrameLayout
+
+    android:layout_width="1000dp"
     android:gravity="center"
-    android:background="@drawable/bg_white"
-    android:layout_height="400dp">
+    android:background="@drawable/bg_white20"
+    android:layout_height="602dp">
+
+<FrameLayout
+    android:layout_gravity="bottom|center_horizontal"
+    android:layout_marginBottom="69dp"
+    android:layout_width="374dp"
+    android:background="@drawable/bg_gray20"
+    android:padding="31dp"
+    android:layout_height="374dp">
+
+
+
    <ImageView
        android:id="@+id/img"
-       android:layout_margin="80dp"
+
        android:layout_width="match_parent"
        android:layout_height="match_parent" />
+</FrameLayout>
+   <TextView
+       android:text="请使用微信“扫一扫”申请门禁权限"
+       android:textSize="40dp"
+       android:textColor="#515050"
+       android:layout_gravity="center_horizontal"
+       android:layout_marginTop="70dp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" />
 
-
-</LinearLayout>
+      <TextView
+          android:id="@+id/close"
+          android:layout_marginRight="20dp"
+          android:layout_marginTop="20dp"
+          android:layout_gravity="right"
+          android:background="@drawable/btn_delete"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+</FrameLayout>
 </LinearLayout>

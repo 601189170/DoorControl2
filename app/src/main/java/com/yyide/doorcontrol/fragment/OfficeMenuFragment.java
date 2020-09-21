@@ -40,6 +40,7 @@ import com.yyide.doorcontrol.dialog.MsgDiallog;
 import com.yyide.doorcontrol.dialog.UpdataDiallog;
 import com.yyide.doorcontrol.hongruan.db.DbController;
 import com.yyide.doorcontrol.hongruan.faceserver.FaceServer;
+import com.yyide.doorcontrol.identy.AppointmentSettingCheckActivity;
 import com.yyide.doorcontrol.requestbean.AccessToApplyReq;
 import com.yyide.doorcontrol.requestbean.GetLastVersionReq;
 import com.yyide.doorcontrol.rsponbean.GetLastVersionRsp;
@@ -105,7 +106,10 @@ public class OfficeMenuFragment extends BaseFragment {
                         DbController.getInstance(activity).deleteTable();
                         FaceServer.getInstance().unInit();
                         FaceServer.getInstance().clearAllFaces(activity);
-                        startActivity(new Intent(activity, LoginActivity.class));
+                        Intent intenttype=new Intent();
+                        intenttype.setClass(activity,LoginActivity.class);
+                        intenttype.putExtra("type",SpData.OfficeType);
+                        startActivity(intenttype);
                         break;
                     case 2:
                         //软件更新
@@ -114,7 +118,11 @@ public class OfficeMenuFragment extends BaseFragment {
                         break;
                     case 3:
                         //系统设置
-                        startActivity(new Intent(activity, SettingActivity.class));
+                        //系统设置
+                        Intent intent = new Intent(getActivity(), AppointmentSettingCheckActivity.class);
+                        intent.putExtra(BaseConstant.DOSHOMTHING, BaseConstant.SETTING);
+                        startActivity(intent);
+//                        startActivity(new Intent(activity, SettingActivity.class));
                         break;
                     case 4:
                         //退出系统

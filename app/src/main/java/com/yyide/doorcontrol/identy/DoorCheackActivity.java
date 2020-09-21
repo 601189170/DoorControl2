@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 
+import com.blankj.utilcode.util.AppUtils;
 import com.yyide.doorcontrol.R;
 import com.yyide.doorcontrol.base.BaseActivity;
 import com.yyide.doorcontrol.base.BaseConstant;
@@ -84,6 +85,9 @@ public class DoorCheackActivity extends BaseActivity implements IdListener {
 //        btn2.setVisibility(PowerUtils.power(24) ? View.VISIBLE : View.GONE);
 //        btn3.setVisibility(PowerUtils.power(26) ? View.VISIBLE : View.GONE);
 //        btn4.setVisibility(PowerUtils.power(25) ? View.VISIBLE : View.GONE);
+//        if (AppUtils.isAppDebug()){
+//            Brocast.open(this);
+//        }
             setTab(0);
     }
 

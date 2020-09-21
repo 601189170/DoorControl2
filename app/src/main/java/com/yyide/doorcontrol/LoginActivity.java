@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -23,13 +22,11 @@ import com.yyide.doorcontrol.requestbean.LoginReq;
 import com.yyide.doorcontrol.rsponbean.LoginRsp;
 import com.yyide.doorcontrol.utils.LoadingTools;
 
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
@@ -43,6 +40,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextView post;
 
     String type;
+    @BindView(R.id.title)
+    TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +56,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         Intent intent = getIntent();
         type = intent.getStringExtra("type");//点击按钮的类型
+        switch (type) {
+            case "appointment":
+                title.setText("预约门禁系统");
+                break;
+            case "hostel":
+                title.setText("宿舍门禁系统");
+                break;
+            case "OfficeType":
+                title.setText("办公室门禁系统");
+                break;
+        }
         post.setOnClickListener(this);
 
     }
@@ -95,7 +105,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 SPUtils.getInstance().put(SpData.LOGINDATA, JSON.toJSONString(rsp));
                 //门禁类别id  2，会议门禁  1，普通门禁=办公室门禁， 3，宿舍门禁
 
-                switch (SpData.getLoginType()){
+                switch (SpData.getLoginType()) {
                     case "1":
                         startActivity(new Intent(LoginActivity.this, OfficeMainActivity.class));
                         break;
@@ -125,7 +135,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     class Error implements Response.ErrorListener {
         @Override
         public void onErrorResponse(VolleyError volleyError) {
-            Log.e("TAG","LoginRsp: " + JSON.toJSON(volleyError));
+            Log.e("TAG", "LoginRsp: " + JSON.toJSON(volleyError));
             pd.dismiss();
             new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.NORMAL_TYPE)
                     .setTitleText("网络设置").setContentText("网络异常，请检查网络。").setCancelText("取消").setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {

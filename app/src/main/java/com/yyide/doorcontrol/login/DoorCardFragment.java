@@ -45,9 +45,9 @@ public class DoorCardFragment extends BaseFragment implements ObserverListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         pd = new LoadingTools().pd(activity);
-        if (AppUtils.isAppDebug()){
-            Identity("456123");
-        }
+//        if (AppUtils.isAppDebug()){
+//            Identity("456123");
+//        }
     }
 
     @Override

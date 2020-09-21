@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ public class EvCodeDiallog extends Dialog {
 
     String str="";
     ImageView img;
+    TextView close;
 
     public EvCodeDiallog(@NonNull Context context, int theme) {
         super(context, theme);
@@ -40,6 +42,13 @@ public class EvCodeDiallog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.evcode_layout);
         img=findViewById(R.id.img);
+        close=findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancel();
+            }
+        });
      //  GlideUtil.loadImage(context, str, img);
 
         img.setImageBitmap(Tool.stringtoBitmap(str));

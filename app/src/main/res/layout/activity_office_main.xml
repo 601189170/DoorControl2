@@ -4,14 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/blue"
+    android:background="@drawable/home_bg_office"
+
     tools:context=".MainActivity">
+
+    <include
+         layout="@layout/home_top_layout"
+        android:layout_height="87dp"
+        android:layout_width="match_parent"
+        ></include>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_weight="1"
-        android:layout_marginTop="72dp"
+        android:layout_marginBottom="83dp"
         android:layout_height="0dp" />
 
 
@@ -19,6 +26,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:gravity="center"
+        android:visibility="gone"
         android:layout_marginBottom="55dp"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_height="8dp">

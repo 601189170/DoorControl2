@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_marginLeft="87dp"
+        android:layout_marginRight="87dp"
+        android:layout_width="match_parent"
+        android:layout_height="87dp">
+
+
+    <TextView
+        android:text="会议室"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="38dp"
+        android:background="@drawable/pic_hysmc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_gravity="right"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:id="@+id/calendar_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextClock
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:format12Hour="HH:mm EEEE"
+                android:format24Hour="HH:mm EEEE"
+                android:textColor="@color/white3"
+                android:textSize="26dp" />
+
+            <TextClock
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-5dp"
+                android:format12Hour="yyyy -MM- dd"
+                android:format24Hour="yyyy -MM- dd"
+                android:textColor="@color/white3"
+                android:textSize="26dp" />
+        </LinearLayout>
+            <TextView
+                android:id="@+id/wifi"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/wifi" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

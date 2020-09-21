@@ -62,7 +62,7 @@ public class doorListActivity extends BaseActivity implements LockListAdapter.on
             public void run() {
                 TTLockClient.getDefault().stopScanLock();
             }
-        },3000);
+        },10000);
 
 
     }

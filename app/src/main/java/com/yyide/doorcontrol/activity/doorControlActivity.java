@@ -48,36 +48,36 @@ public class doorControlActivity extends AppCompatActivity {
 //        bluetoothService=new BluetoothService(this);
 
 
-        open.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                bluetoothService.doUnlock();
-//                Intent intent = new Intent();
-//                intent.setClass(doorControlActivity.this, BluetoothService.class);
-//                intent.putExtra(BaseConstant.Command, "open");
-//                startService(intent);
-                Brocast.open(doorControlActivity.this);
-            }
-        });
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+//        open.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                bluetoothService.doUnlock();
+////                Intent intent = new Intent();
+////                intent.setClass(doorControlActivity.this, BluetoothService.class);
+////                intent.putExtra(BaseConstant.Command, "open");
+////                startService(intent);
+//                Brocast.open(doorControlActivity.this);
+//            }
+//        });
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
                 if (MyApp.getInstance().getChoosedLock()!=null){
                     No.setText("已连接："+ MyApp.getInstance().getChoosedLock().getLockName());
                 }else {
                     No.setText("未连接");
                     delectconnect.setEnabled(false);
                 }
-
-            }
-        },5000);
+//
+//            }
+//        },5000);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Brocast.start(this);
+//        Brocast.start(this);
     }
 
     @OnClick({R.id.Reconnection, R.id.delectconnect})

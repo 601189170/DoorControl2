@@ -28,6 +28,7 @@ import com.yyide.doorcontrol.adapter.RecyleviewIndexAdapter;
 import com.yyide.doorcontrol.adapter.ViewPagerFragmentAdapter;
 import com.yyide.doorcontrol.base.BaseActivity;
 import com.yyide.doorcontrol.base.BaseConstant;
+import com.yyide.doorcontrol.brocast.Brocast;
 import com.yyide.doorcontrol.fragment.AppointmentSettingFragment;
 import com.yyide.doorcontrol.fragment.OfficeHomeFragment;
 
@@ -185,6 +186,7 @@ public class OfficeMainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         getfacefeature();
+        Brocast.start(this);
     }
 
     public void initFragmist() {

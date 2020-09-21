@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="950dp"
-    android:layout_height="720dp"
+    android:layout_width="1010dp"
+    android:layout_height="650dp"
+
 >
 
     <LinearLayout
-        android:layout_width="900dp"
-        android:layout_height="670dp"
-        android:padding="30dp"
-        android:layout_gravity="bottom"
+
+        android:layout_width="1010dp"
+        android:layout_height="650dp"
+
         android:background="@drawable/bg_white"
         android:gravity="center_horizontal"
         android:orientation="vertical">
@@ -18,55 +19,67 @@
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            />
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginRight="65dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="40dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="86dp">
+
+
             <!--刷卡-->
             <CheckedTextView
                 android:id="@+id/btn1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="25dp"
+                android:layout_width="260dp"
+                android:layout_height="86dp"
                 android:drawableTop="@drawable/login1_check"
-                android:drawablePadding="10dp"
-                android:text="刷卡登录"
-                android:textAlignment="center"
-                android:textColor="@color/black2"
-                android:textSize="20dp" />
+
+             />
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
             <!--人脸-->
             <CheckedTextView
                 android:id="@+id/btn2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="25dp"
+                android:layout_width="260dp"
+                android:layout_height="86dp"
+
                 android:drawableTop="@drawable/login2_check"
-                android:drawablePadding="10dp"
-                android:text="人脸识别"
+
+
                 android:textAlignment="center"
                 android:textColor="@color/black2"
                 android:textSize="20dp" />
+
             <CheckedTextView
                 android:id="@+id/btn4"
                 android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="25dp"
+
                 android:drawableTop="@drawable/login4_check"
-                android:drawablePadding="10dp"
-                android:text="指纹识别"
+
+
                 android:textAlignment="center"
                 android:textColor="@color/black2"
                 android:textSize="20dp" />
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
             <CheckedTextView
                 android:id="@+id/btn3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="25dp"
+                android:layout_width="260dp"
+                android:layout_height="86dp"
+
                 android:drawableTop="@drawable/login3_check"
-                android:drawablePadding="10dp"
-                android:text="账号登录"
+
                 android:textAlignment="center"
                 android:textColor="@color/black2"
                 android:textSize="20dp" />
@@ -74,9 +87,12 @@
     </LinearLayout>
 
     <TextView
+        android:layout_gravity="right"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/close"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/gb_btn" />
 
-</LinearLayout>
+</FrameLayout>
